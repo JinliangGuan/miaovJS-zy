@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title></title>
+<style>
+*{
+	margin: 0;
+	padding: 0;
+	font-family: "微软雅黑";
+}
+body{
+	background: #2f2a78;
+	overflow: hidden;
+}	
+.warp{
+	width:101px;
+	height: 387px;
+	background: #fff;
+	margin: 200px auto;
+}
+#box{
+	width:88px;
+	height: 387px;
+	float:left;
+	overflow: hidden;
+	position: relative;
+}
+#div1{
+	width:13px;
+	height: 387px;
+	float: right;
+	position:relative;
+	background: #ccc;
+}
+#div3{
+	width:9px;
+	height:72px;
+	background:url(bg.png) 0px -12px no-repeat;
+	position: absolute;
+	top:0;
+	left: 2px;
+}
+#div2{
+	width:13px;
+	height: 367px;
+	margin-top: 10px;
+	position: relative;
+}
+#top{
+	width:11px;
+	height: 10px;
+	background:url(bg.png) 0 0 no-repeat;
+	position: absolute;
+	top:0;
+	left:1px;
+}
+#bottom{
+	width:11px;
+	height: 10px;
+	background:url(bg.png) -12px 0 no-repeat;
+	position: absolute;
+	bottom:0;
+	left:1px;
+}
+#ul{
+	list-style: none;
+	width:88px;
+	position: absolute;
+	top:0;
+}
+#ul li:hover{
+	background: blue;
+	cursor: pointer;
+}
+#ul li:first-child:hover{
+	background: red;
+	cursor: pointer;
+}
+li{
+	height: 30px;
+	line-height: 30px;
+	text-align: center;
+}
+</style>
+</head>
+<body>
+	<section class="warp">
+		<div id="box">
+			<ul id="ul">
+				<!--<li>北京</li>
+				<li>北京</li>
+				<li>北京</li>
+				<li>北京</li>
+				<li>北京</li>-->
+			</ul>
+		</div>
+		<div id="div1">
+			<div id="top"></div>
+			<div id="div2">
+				<div id="div3"></div>
+			</div>
+			<div id="bottom"></div>
+		</div>
+	</section>
+
+
+
+
+<script src="data.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+   	var box = document.getElementById('box');
+   	var list = document.getElementById('ul');
+   	var ScrollBox = document.getElementById('div1');
+   	var topBtn = document.getElementById('top');
+   	var btmBtn = document.getElementById('bottom');
+   	var ScrollBar = document.getElementById('div2');
+   	var SDragBtn = document.getElementById('div3');
+   	
+
+   	var sBarPos = ScrollBar.getBoundingClientRect();
+   	var sBarMax = ScrollBar.clientHeight-SDragBtn.offsetHeight;
+
+   	//生成数据
+   	var str = '';
+   	for(var i=0;i<arrCity.length;i++){
+   		str += '<li>'+arrCity[i].name+'</li>'
+   	}
+   	 list.innerHTML = str; 
+
+   	 //阻止选中文字
+   	 document.onmousedown = function(ev){
+   	 	ev.preventDefault();
+   	 }
+
+   	 //存列表的top值
+   	 var listTop = 0;
+   	 //list在box中最大的滚动值
+   	 var maxTop = box.scrollHeight-box.clientHeight;
+   	 //鼠标滚轮
+   	 document.onmousewheel = function(ev){
+   	 	//>0上滚,list负值
+   	 	if(ev.wheelDelta>0){
+   	 		listTop += 30;
+   	 		if(listTop>0){
+   	 			listTop =  0;
+   	 		}
+   	 	}
+   	 	//<0下滚
+   	 	if(ev.wheelDelta<0){
+   	 		//console.log('下')
+   	 		listTop -= 30;
+   	 		if(listTop<-maxTop){
+   	 			listTop = -maxTop;
+   	 		}
+   	 	}
+   	 	list.style.top = listTop+'px';
+   	 	dragBtnPos();
+   	 }
+
+   	 topBtn.onclick = function(){
+   	 	//console.log('上')
+ 		listTop += 30;
+ 		if(listTop>0){
+ 			listTop =  0;
+ 		}
+ 		list.style.top = listTop+'px';
+ 		dragBtnPos();
+
+   	 } 
+   	 btmBtn.onclick = function(){
+   	 	//console.log('下')
+ 		listTop -= 30;
+ 		if(listTop<-maxTop){
+ 			listTop = -maxTop;
+ 		} 
+ 		list.style.top = listTop+'px';
+ 		dragBtnPos();	
+   	 } 
+   	SDragBtn.onmousedown = function(ev){
+   		var dY = ev.clientY;
+   		var posT = SDragBtn.getBoundingClientRect().top;
+   		var disY = dY-posT;
+   		document.onmousemove = function(ev){
+   			var nT = ev.clientY;
+   			var t = nT-disY-sBarPos.top;
+   			if(t<0){
+   				t = 0;
+   			}
+   			if(t>sBarMax){
+   				t=sBarMax;
+   			}
+   			SDragBtn.style.top = t+'px';
+   			var dragS = t/sBarMax;
+   			listTop = -maxTop*dragS;
+   			list.style.top = listTop+'px';
+
+   		}
+   		document.onmouseup = function(){
+   			document.onmousemove = null;
+   			document.onmouseup= null;
+   		}
+   	}
+
+   	//单击滚动轨道
+   	ScrollBar.onmousedown = function(ev){
+   		var dT = ev.clientY;
+   		var timer = null;
+   		if(ev.target == ScrollBar){
+   			ScrollBar.style.background = '#999';
+   			dragMove();
+   			//设置定时器，如果仍然在按住鼠标，就再次执行滚动
+   			timer = setInterval(function(){
+   				dragMove();
+   			},20);
+   			ScrollBar.onmousemove = function(ev){
+   				dT = ev.clientY;
+   			}
+   			function dragMove(){
+   				var dragPos = SDragBtn.getBoundingClientRect();
+   				//鼠标定位小于滑块的顶部，上滚
+   				if(dT<dragPos.top){
+   					listTop += 5;
+			 		if(listTop>0){
+			 			listTop =  0;
+			 		}
+   					
+			 		list.style.top = listTop+'px';
+			 		dragBtnPos();
+   				}
+   				//鼠标定位大于滑块的底部，下滚
+   				if(dT>dragPos.bottom){
+	   				listTop -= 5;
+			 		if(listTop<-maxTop){
+			 			listTop = -maxTop;
+			 		} 
+			 		list.style.top = listTop+'px';
+			 		dragBtnPos();	
+		 		}
+   			}
+   		}
+   		ScrollBar.onmouseout = ScrollBar.onmouseup = function(){
+   			clearInterval(timer);
+   			ScrollBar.style.background = '';
+   		}
+   	}
+
+
+
+
+   	//通过list位置定滑块位置函数============
+   	function dragBtnPos(){
+   		var  listS = -listTop/maxTop;
+   		SDragBtn.style.top = sBarMax*listS+'px';
+   	}
+
+   	
+
+
+</script>
+</body>
+</html>
