@@ -12,13 +12,17 @@
 		var box = document.getElementById('box');
 		function drag(obj){
 				obj.onmousedown = function(ev){
-				var disX = ev.clientX-obj.offsetLeft;
-				var disY = ev.clientY-obj.offsetTop;
+					var disX = ev.clientX-obj.offsetLeft;
+					var disY = ev.clientY-obj.offsetTop;
+					document.onmousemove = function(ev){
+						obj.style.left = ev.clientX-disX;
+						obj.style.top = ev.clientY-disY;
+					
+					}
 			}
 		}
 
 		
-
 
 	</script>
 </body>
