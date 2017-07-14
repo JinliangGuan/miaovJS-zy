@@ -10,8 +10,10 @@
 <body>
 	<script>
 		var box = document.getElementById('box');
-		function drag(obj){
-			
+		
+		document.onmouseup = function(){
+			document.onmousemove = null;
+			document.onmouseup = null;
 		}
 	</script>
 </body>
