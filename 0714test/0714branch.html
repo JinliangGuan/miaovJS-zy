@@ -11,8 +11,15 @@
 	<script>
 		var box = document.getElementById('box');
 		function drag(obj){
-			
+				obj.onmousedown = function(ev){
+				var disX = ev.clientX-obj.offsetLeft;
+				var disY = ev.clientY-obj.offsetTop;
+			}
 		}
+
+		
+
+
 	</script>
 </body>
 </html>
