@@ -4,20 +4,27 @@
 	<meta charset="UTF-8">
 	<title>0714分支</title>
 	<style>
-
+		#box{
+			width: 100px;
+			height: 100px;
+			border:1px solid #000;
+			background:red;
+			position: absolute;
+		}
 	</style>
 </head>
 <body>
+	<div id="box"></div>
 	<script>
 		var box = document.getElementById('box');
-<<<<<<< HEAD
+		drag(box);
 		function drag(obj){
 				obj.onmousedown = function(ev){
 					var disX = ev.clientX-obj.offsetLeft;
 					var disY = ev.clientY-obj.offsetTop;
 					document.onmousemove = function(ev){
-						obj.style.left = ev.clientX-disX;
-						obj.style.top = ev.clientY-disY;
+						obj.style.left = ev.clientX-disX+'px';
+						obj.style.top = ev.clientY-disY+'px';
 					
 					}
 					document.onmouseup = function(){
@@ -26,6 +33,7 @@
 					}
 
 			}
+		}
 		
 
 	</script>
