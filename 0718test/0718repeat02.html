@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>0718重复次数最多</title>
+	<style>
+		
+	</style>
+</head>
+<body>
+
+<script>
+
+var str = 'aigekaj7glk77eajigje744543834aljgka868jgje6iagk8la6jk886668ehjia6jhljahkj666kahjh';
+var j = {};
+var max = 0;
+var s = '';
+for(var i=0;i<str.length;i++){
+	if(!j[str[i]]){
+		j[str[i]] = 1;
+	}else{
+		j[str[i]] ++;
+	}
+}
+//console.log(j)
+for(var k in j){
+	if(j[k]>max){
+		max = j[k];
+		s = k;
+	}
+}
+console.log(max,s)
+
+</script>
+
+
+
+</body>
+</html>

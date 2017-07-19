@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>我的第一个构造函数</title>
+</head>
+<body>
+
+
+<script>
+
+	var t1 = new teacher('金亮','27');
+	t1.say();
+	
+
+	function teacher(name,age){
+		this.name = name;
+		this.age = age;
+		this.say = function(){
+			alert('我的名字叫'+this.name)
+		}
+	}
+
+
+
+
+
+
+
+
+
+
+</script>
+
+
+
+
+</body>
+</html>

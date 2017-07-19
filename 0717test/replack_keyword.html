@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>0717正则replace</title>
+</head>
+<body>
+<input type="text" id="inp">
+<input type="button" id="btn" value="提交">
+<ul id="box"></ul>
+<script>
+var inp = document.getElementById('inp');
+var btn = document.getElementById('btn');
+var box = document.getElementById('box');
+btn.onclick = function(){
+	var txt = inp.value;
+	var noSay = ['笨蛋','垃圾','废物','完蛋']
+	var noWay = noSay.join('|');
+	var re = new RegExp(noWay,'g');
+	var v = txt.replace(re,function($0){
+		switch($0){
+			case '垃圾':
+				return '加油ing';
+			break;
+			case '笨蛋':
+				return '奋斗ing';
+			break;
+			case '废物':
+				return '努力ing';
+			break;
+			case '完蛋':
+				return '潜力ing';
+			break;
+		}
+	})
+	var li = document.createElement('li');
+	li.innerHTML = v;
+	box.appendChild(li);
+	inp.value = '';
+}
+
+
+</script>	
+</body>
+</html>

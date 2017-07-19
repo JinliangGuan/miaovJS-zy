@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>0719原型</title>
+</head>
+<body>
+
+
+<script>
+
+	var t1 = new Fn('金亮');
+	
+	
+
+	//Fn={}  Fn={}
+	function Fn(name){
+		this.name = name;
+		// this.say = function(){
+		// 	alert(this.name);
+		// }
+		console.log(this)
+	}
+	/*Fn.prototype.say = function(){
+		alert(this.name)
+	}*/
+
+	/*Object.prototype.say = function(){
+		alert(this.name)
+	}*/
+	
+	Fn.say = function(){
+		alert(this.name);
+	}
+	// t1.say();
+	console.log(t1)  //t1是一个实例化函数
+	console.dir(Fn)  //Fn是一个函数
+
+
+
+
+
+
+
+</script>
+
+
+
+
+</body>
+</html>

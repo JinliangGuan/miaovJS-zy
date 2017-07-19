@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>我的第一个构造函数</title>
+</head>
+<body>
+
+
+<script>
+
+	var t1 = teacher('guan','27');
+	t1.say();
+	console.log(t1)
+
+	function teacher(name,age){
+		var obj = {};
+		obj.name = name;
+		obj.age = age;
+		obj.say = function(){
+			alert('我的名字叫'+this.name)
+		}
+		return obj;
+	}
+	/*function teacher(name,age){
+		var obj = {
+			name,
+			age,
+			say
+		}
+	}	*/
+
+
+
+
+
+
+
+</script>
+
+
+
+
+</body>
+</html>

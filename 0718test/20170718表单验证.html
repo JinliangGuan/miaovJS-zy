@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>20170718表单验证</title>
+	<link rel="stylesheet" href="common.css">
+	<style>
+		.box{
+			width: 480px;
+			height: 500px;
+			border: 1px solid #000;
+			border-radius: 10px;
+			margin:100px auto;
+
+		}
+		.list{
+			padding-top: 60px;
+		}
+		.list li{
+			height: 40px;
+			margin-bottom: 20px;
+		}
+		.list label{
+			display: block;
+			float: left;
+			width: 95px;
+			height: 40px;
+			line-height: 40px;
+			font-size:14px;
+			text-align: right;
+		}
+		.list input{
+			display: block;
+			float: left;
+			width: 288px;
+			height: 36px;
+			line-height: 36px;
+			font-size: 15px;
+			border:2px solid #999;
+			padding:0 10px;
+		}
+		.list .inpOk{
+			border-color: #05e905;
+		}
+		.list .inpNo{
+			border-color: red;
+		}
+
+		.subBox{
+			height:40px;
+			padding:20px 0;
+			text-align: center;
+		}
+		.subBox input{
+			width: 126px;
+			height: 40px;
+			text-align: center;
+			font:18px/36px "微软雅黑";
+			color:#ccc;
+			border: 2px solid #ccc;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+		.subBox .btnOk{
+			border-color: #05e905;
+			color:#000;
+		}
+		.subBox .btnNo{
+			border-color: #ccc;
+			color:#ccc;
+		}
+	</style>
+</head>
+<body>
+<div class="box">
+	<form action="">
+		<ul class = "list">
+			<li class="item">
+				<label for="">QQ：</label>
+				<input type="text" id="qqTxt">
+			</li>
+			<li class="item">
+				<label for="">邮箱：</label>
+				<input type="text" id="emailTxt">
+			</li>
+			<li class="item">
+				<label for="">手机：</label>
+				<input type="text" id="telTxt">
+			</li>
+			<li class="item">
+				<label for="">出生年月：</label>
+				<input type="text" id="dayTxt">
+			</li>
+		</ul>
+		<div class="subBox">
+			<input type="button" id="subBtn" value="注 册">
+		</div>
+	</form>	
+</div>	
+<script>
+
+var list = document.getElementsByClassName('list')[0];
+var lis = document.getElementsByClassName('item');
+var inps = list.getElementsByTagName('input');
+var qqTxt  = document.getElementById('qqTxt');
+var eTxt  = document.getElementById('emailTxt');
+var telTxt = document.getElementById('telTxt');
+var dayTxt  = document.getElementById('dayTxt');
+var subBtn  = document.getElementById('subBtn');
+//console.log(inps)
+for(var i=0;i<inps.length;i++){
+	inps[i].onOff = false;
+	/*inps[i].addEventListener('keyup',function(){
+		isOk(this)
+	})*/
+}
+
+qqTxt.addEventListener('keyup',function(){
+	var val = this.value;
+	if(/^[1-9]\d{4,10}$/g.test(val)){
+		this.onOff = true;
+	}else{
+		this.onOff = false;
+	}
+	isOk(this)
+}) 
+eTxt.addEventListener('keyup',function(){
+	var val = this.value;
+	var re = /^\w+@[a-z0-9]+(\.[a-z]+){1,3}$/g;
+	//^\w+@[a-z0-9]+(\.[a-z]+){1,3}$
+	if(re.test(val)){
+		this.onOff = true;
+	}else{
+		this.onOff = false;
+	}
+	isOk(this)
+}) 
+telTxt.addEventListener('keyup',function(){
+	var val = this.value;
+	var re = /^1[3578]\d{9,9}$/g;
+	if(re.test(val)){
+		this.onOff = true;
+	}else{
+		this.onOff = false;
+	}
+	isOk(this)
+}) 
+
+dayTxt.addEventListener('keyup',function(){
+	var val = this.value;
+	var re = /^(\d{1,4})\D+(\d{1,2})\D+(\d{1,2})\D?$/g;
+	var day31 = [1,3,5,7,8,10,12];
+	var day30 = [4,6,9,11];
+	if(re.test(val)){
+		var nDate = new Date();
+		var nYear = nDate.getFullYear();
+		var nMon = nDate.getMonth()+1;
+		var nDay = nDate.getDate();
+		//console.log(nYear,nMon,nDay)
+		var inpDate = '';
+		var a = val.replace(re,function($0,$1,$2,$3){
+			//console.log($1,$2,$3)
+			
+			if($1<nYear || ($1==nYear&&$2<nMon) || ($1==nYear&&$2==nMon&&$3<=nDay)){
+				/*=========月份挑毛病大法==========*/
+				dayTxt.onOff = true;
+				if($1==0||$2==0||$3==0||$2>12){
+					dayTxt.onOff = false;
+				}
+				if(dayTxt.onOff){
+					for(var i=0;i<day31.length;i++){
+						if(day31[i]==$2){
+							if($3>31){
+								dayTxt.onOff = false;	
+							}
+						}
+					}
+				}
+				if(dayTxt.onOff){
+					for(var j=0;j<day30.length;j++){
+						if(!day30[j]==$2){
+							if($3>30){
+								dayTxt.onOff = false;	
+							}
+						}
+					}
+				}
+				if($2==2){
+					if($1%4==0){
+						if($3>29){
+							dayTxt.onOff = false;
+						}
+					}else{
+						if($3>28){
+							dayTxt.onOff = false;
+						}
+					}
+				}					
+			}else{
+				dayTxt.onOff = false;
+			}
+		})
+
+
+
+	}else{
+		this.onOff = false;
+
+	}
+	isOk(this)	
+}) 
+
+
+
+function isOk(obj){
+	if(obj.onOff){
+		obj.className = 'inpOk'
+
+	}else{
+		obj.className = 'inpNo'
+	}
+	allCheck();
+}
+function allCheck(){
+	var m=0;
+	for(var i=0;i<inps.length;i++){
+		if(inps[i].onOff){
+			m++;
+		}
+	}
+	if(m==inps.length){
+		subBtn.className = 'btnOk'; 
+		subBtn.onOff = true;
+	}else{
+		subBtn.className = 'btnNo'; 
+		subBtn.onOff = false;
+	}
+}
+
+
+</script>
+</body>
+</html>

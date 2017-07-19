@@ -1,0 +1,324 @@
+/* 1号店CSS Document */
+/*=====================reset============================*/
+body,p,h1,h2,h3,h4,h5,h6,dl,dd{
+    margin:0;
+    padding:0;
+    }
+body{
+    background-color:#f9f9f9;
+    font-size: 12px;
+    font-family:"微软雅黑";
+    color: #333;
+    }
+ul,ol{
+    margin:0;
+    padding:0;
+    list-style:none;
+    }
+h1,h2,h3,h4,h5,h6,strong,b{
+    font-weight:normal;
+    }
+em,i{
+    font-style:normal;
+    }
+a{
+   text-decoration:none;
+   color:inherit;
+   }
+img{
+    border:0;
+    vertical-align:top;
+   }
+
+form,input,textarea,select,option,fieldset{
+    margin:0;
+    padding:0;
+    border:0;
+    background:none;
+    vertical-align:top;
+}
+textarea{
+    overflow: auto;
+    resize: none;
+}
+
+/*===========================public======================*/
+.clearfix:after{
+                content:"";
+                display:block;
+                clear:both;
+                height:0;
+                overflow:hidden;
+}
+.clearfix{
+                zoom:1;
+}
+.fl{
+    float:left;
+}
+.fr{
+    float:right;
+}
+body .clear-l-padding{
+    padding-left: 0;
+}
+body .clear-r-padding{
+    padding-right: 0;
+}
+body .clear-r-margin{
+    margin-right: 0;
+}
+.hottext{
+    color:#ff6600;
+}
+
+
+/*===========================global================================*/
+.newicn{
+    display: inline-block;
+    vertical-align: top;
+    width: 14px;
+    height: 14px;
+    margin-top:6px;
+    background:url(../images/suning-icn.png) no-repeat;
+}
+
+/*===================topbar==========================*/
+.topbarwrap{
+    width: 100%;
+    height: 35px;
+    border-bottom:1px solid #dbdbdb;
+    background:#fafafa;
+}
+.topbar{
+    width: 1200px;
+    height: 35px;
+    line-height: 35px;
+    margin:0 auto;
+    position: relative;
+}
+.loginbox{
+    width: 103px;
+    height: 37px;
+    border:1px solid #f0f0f0;
+    border-top:none;
+    background: #fff;
+    position:absolute;
+    left: 0;
+    top: 0;
+}
+.login-txt{
+    height: 32px;
+    line-height: 32px;
+    padding-top: 1px;
+    text-align: center;
+    font-size: 0px;
+}
+.login-txt span{
+    font-size: 12px;
+    color: #333333;
+}
+.login-txt a{
+    font-size: 11px;
+    color: #0066cc;
+}
+.login{
+    margin-left: 3px;
+    margin-right: 2px;
+}
+.regsiter{
+    margin-left: 2px;
+}
+.dropicn3{
+    width: 7px;
+    height: 4px;
+    margin:0 auto;
+    background: url(../images/yihaodian-icn.png) no-repeat -14px top;
+}
+.dec-box{
+    width: 50px;
+    height: 3px;
+    background: #fff;
+    border:1px solid #f0f0f0;
+    border-top:none;
+    position: absolute;
+    left: 25px;
+    bottom:-4px;
+}
+.songhuo{
+    margin-left: 109px;
+    padding-top: 8px;
+    line-height: 20px;
+    color: #333;
+}
+.songhuodizhi{
+    height: 18px;
+    line-height: 18px;
+    font-weight: bold;
+    padding:0 6px 0 4px;
+    border: 1px solid #dbdbdb;
+    margin-left: 5px;
+    background: #fff;
+}
+.dropicn1{
+    display: inline-block;
+    vertical-align: top;
+    width:6px;
+    height: 3px;
+    margin-left: 3px;
+    margin-top: 7px;
+    background: url(../images/yihaodian-icn.png) no-repeat -31px top;
+}
+.huoche-icn{
+    display:block;
+    width:38px;
+    height: 19px;
+    background: url(../images/yihaodian-icn.png) no-repeat left -14px;
+}
+
+.topbar-r{
+    padding-top: 5px;
+    color:#666;
+    height: 30px;
+    line-height: 30px;
+}
+.topbar-menu-item{
+    padding:0 7px;
+    background: url(../images/yihaodian-icn.png) no-repeat right 1px;
+}
+.dropicn2{
+    display: inline-block;
+    vertical-align: top;
+    width:11px;
+    height:11px;
+    margin-left: 5px;
+    margin-top: 9px;
+    background: url(../images/yihaodian-icn.png) no-repeat -48px -14px;
+}
+.phone-icn{
+    display: inline-block;
+    vertical-align: top;
+    width:10px;
+    height:16px;
+    margin:8px 6px 0 1px;
+    background: url(../images/yihaodian-icn.png) no-repeat -69px -14px;
+}
+.shoucangjia{
+    padding-left: 14px;
+}
+.guanzhuwomen span{
+    padding-left: 6px;
+}
+.weibo-icn,.weixin-icn{
+    display:block;
+    width:16px;
+    height:16px;
+    margin:5px;
+    background: url(../images/yihaodian-icn.png) no-repeat -89px -14px;
+}
+.weixin-icn{
+    background-position: -115px -14px;
+}
+/*===================footer==========================*/
+/*=================footer-baozhangBox==============*/
+.footer-wrap{
+    background: #fff;
+}
+.footer{
+    width: 1200px;
+    margin:0 auto;
+}
+.footer-baozhangBox{
+    padding:30px 0 30px 45px;
+    border-bottom:1px solid #ebebeb;
+  }
+.baozhang-item{
+    width: 218px;
+    height:66px;
+    margin-right: 77px;
+  }
+.baozhuang-icn{
+    width: 66px;
+    height:66px;
+    background:url(../images/baozhang-icn.jpg) no-repeat;
+  }
+.shouhou-icn{background-position:left -80px;}
+.zhunshi-icn{background-position:left -160px;}
+.help-icn{background-position:left -240px;}
+
+.baozhang-info{
+    width: 137px;
+    padding:7px 0 0 15px;
+}
+.baozhang-item-name{
+    height:28px;
+    line-height: 28px;
+    font-weight: bold;
+    font-size: 16px;
+}
+.baozhang-item-txt{
+    height:22px;
+    line-height: 22px;
+    color:#999;
+}
+
+.ft_service_link_box{
+    height:173px;
+    padding:23px 0 0 47px;
+}
+.ft_service_link{
+    width: 128px;
+    margin-right: 40px;
+}
+.ft_service_link_tit{
+    height:28px;
+    line-height: 28px;
+    font-size: 13px;
+    font-weight: bold;
+    color:#666;
+}
+.ft_service_link_txt{
+    height:24px;
+    line-height: 24px;
+    color:#666;
+}
+.app-link{
+    display: block;
+    width: 90px; 
+    padding-left: 33px;
+    margin-right: 48px;   
+}
+.app-name{
+    display: block;
+    height:28px;
+    line-height: 28px;
+    font-size: 13px;
+    font-weight: bold;
+    color:#666;
+}
+.ft-cr-txt{
+    height:28px;
+    line-height: 28px;
+    font-size: 0px;
+    text-align: center;
+}
+.ft-cr-txt a{
+    font-size: 12px;
+    color:#666;
+}
+.fl-cr-shu{
+    font-size: 12px;
+    color:#999;
+    margin:0 11px;
+}
+.fl-xinyu-picbox{
+    height:66px;
+    padding-top: 18px;
+    text-align: center;
+}
+.fl-xinyu-pic{
+    height: 30px;
+}
+
+
+

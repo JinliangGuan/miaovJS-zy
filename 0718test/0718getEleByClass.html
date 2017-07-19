@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>0718正则兼容gitEleByClass</title>
+	<style>
+		li{
+			margin-top: 10px;
+		}
+	</style>
+</head>
+<body>
+<ul>
+	<li class="item"></li>
+	<li class="item"></li>
+	<li class="item item1 item2"></li>
+	<li class="item"></li>
+	<li class=""></li>
+	<li class="item2"></li>
+	<li class="item"></li>
+
+</ul>	
+<script>
+
+
+
+var items = getByClass('item2');
+console.log(items)
+function getByClass(sClass){
+	var arr = [];
+	var aEle = document.getElementsByTagName('*');
+	//var re = /\bitem\b/;
+	var re = new RegExp('\\b'+sClass+'\\b');
+	for(var i=0;i<aEle.length;i++){
+		if(re.test(aEle[i].className)){
+			arr.push(aEle[i]);
+		}
+	}
+	return arr;
+}
+
+for(var j=0;j<items.length;j++){
+	items[j].style.background = 'red';
+}
+
+
+
+</script>
+
+
+
+</body>
+</html>

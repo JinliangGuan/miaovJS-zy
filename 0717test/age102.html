@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>0717正则16-102</title>
+</head>
+<body>
+<input type="text" id="inp">
+<input type="button" id="btn" value="提交">
+<ul id="box"></ul>
+<script>
+var inp = document.getElementById('inp');
+var btn = document.getElementById('btn');
+var box = document.getElementById('box');
+btn.onclick = function(){
+	var age = inp.value;
+	//var re = /^(1[7-9])$|^([2-9][0-9])$|^(10[0-2])$/;
+	var re = /^(1[1-9])$|^([2-9][0-9])$|^(10[0-8])$/;
+	
+	if(re.test(age)){
+		alert('ok,请注册')
+	}else{
+		alert('no,不符合年龄')
+	}
+
+	
+}
+
+
+</script>	
+</body>
+</html>
