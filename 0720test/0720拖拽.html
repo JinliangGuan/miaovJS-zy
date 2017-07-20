@@ -4,12 +4,16 @@
 	<meta charset="UTF-8">
 	<title>0720拖拽</title>
 	<style>
-		#box{
+		#box,#box2{
 			position: absolute;
 			width: 100px;
 			height: 100px;
 			border: 1px solid #000;
 			background:red;
+		}
+		#box2{
+			background: green;
+			left: 200px;
 		}
 		
 
@@ -17,6 +21,8 @@
 </head>
 <body>
 <div id="box">
+</div>	
+<div id="box2">
 </div>	
 <script>
 function drag(obj){
@@ -50,22 +56,37 @@ drag.prototype.down = function(ev){
 }
 drag.prototype.move = function(ev){
 	//console.log(ev.clientY-this.disY)
-	this.obj.style.left = ev.clientX-this.disX+'px';
-	this.obj.style.top = ev.clientY-this.disY+'px';
+	this.l = ev.clientX-this.disX;
+	this.t = ev.clientY-this.disY;
+	this.xian();
+	this.obj.style.left = this.l+'px';
+	this.obj.style.top = this.t+'px';
 }
 drag.prototype.up = function(){
 	document.onmousemove = null;
 	document.onmouseup = null;
 }
-/*drag.prototype.xian = function(){
-	if()
-}*/
+drag.prototype.xian = function(){
+	if(this.l<0){
+		this.l = 0;
+	}else if(this.l>window.innerWidth-this.obj.offsetWidth){
+		this.l = window.innerWidth-this.obj.offsetWidth;
+	}
+
+	if(this.t<0){
+		this.t = 0;
+	}else if(this.t>window.innerHeight-this.obj.offsetHeight){
+		this.t = window.innerHeight-this.obj.offsetHeight;
+	}
+}
 
 
 
 
 var box = document.getElementById('box');
+var box2 = document.getElementById('box2');
 var d = new drag(box);
+var d2 = new drag(box2);
 
 
 </script>
