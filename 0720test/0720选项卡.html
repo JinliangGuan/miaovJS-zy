@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>0720选项卡</title>
+	<style>
+		#box{
+			width: 400px;
+			height: 400px;
+			border: 1px solid #000;
+		}
+		input{
+			width: 125px;
+			height: 40px;
+
+		}
+		#box div{
+			height: 360px;
+			display: none;
+		}
+		#box .show{
+			display: block;
+		}
+		#box .active{
+			background: yellow;
+		}
+
+	</style>
+</head>
+<body>
+<div id="box">
+	<input type="button" value="选项卡1" class="active">
+	<input type="button" value="选项卡2">
+	<input type="button" value="选项卡3">
+	<div class="show" style="background:red"></div>
+	<div style="background:green"></div>
+	<div style="background:blue"></div>
+</div>	
+<script>
+
+function Tab(id){
+	this.box = document.getElementById(id);
+	this.btns = this.box.getElementsByTagName('input');
+	this.divs = this.box.getElementsByTagName('div');
+	//console.log(this.btns)
+}
+Tab.prototype.clk = function(){
+	for(var i=0,len=this.btns.length;i<len;i++){
+		this.btns[i].index = i;
+		var _this = this;
+		this.btns[i].onclick = function(){
+			_this.gogo(this);
+		}
+
+	}
+}
+Tab.prototype.gogo = function(clk_this){
+	for(var i=0,len=this.btns.length;i<len;i++){
+		this.btns[i].className = this.divs[i].className = '';
+	}
+	clk_this.className = 'active';
+	this.divs[clk_this.index].className = 'show';
+}
+
+var f = new Tab('box');
+f.clk();
+
+
+</script>
+
+
+</body>
+</html>

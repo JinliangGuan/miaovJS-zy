@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>0720拖拽</title>
+	<style>
+		#box{
+			position: absolute;
+			width: 100px;
+			height: 100px;
+			border: 1px solid #000;
+			background:red;
+		}
+		
+
+	</style>
+</head>
+<body>
+<div id="box">
+</div>	
+<script>
+function drag(obj){
+	this.obj = obj;
+	this.disX = 0;
+	this.disY = 0;
+	this.init();
+	this.l = 0;
+	this.t = 0;
+
+}
+drag.prototype.init = function(){
+	var _this = this;
+	this.obj.onmousedown = function(ev){
+		_this.down(ev);
+	}
+	console.log(this.obj)
+}
+drag.prototype.down = function(ev){
+	
+	 this.disX = ev.clientX-this.obj.offsetLeft;
+	 this.disY = ev.clientY-this.obj.offsetTop;
+	 var _this = this;
+	 document.onmousemove = function(ev){
+	 	_this.move(ev);
+	 }
+	 document.onmouseup = function(ev){
+	 	_this.up();
+	 }
+
+}
+drag.prototype.move = function(ev){
+	//console.log(ev.clientY-this.disY)
+	this.obj.style.left = ev.clientX-this.disX+'px';
+	this.obj.style.top = ev.clientY-this.disY+'px';
+}
+drag.prototype.up = function(){
+	document.onmousemove = null;
+	document.onmouseup = null;
+}
+/*drag.prototype.xian = function(){
+	if()
+}*/
+
+
+
+
+var box = document.getElementById('box');
+var d = new drag(box);
+
+
+</script>
+
+
+</body>
+</html>
