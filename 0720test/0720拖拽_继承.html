@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>0720拖拽</title>
+	<style>
+		#box,#box2{
+			position: absolute;
+			width: 100px;
+			height: 100px;
+			border: 1px solid #000;
+			background:red;
+		}
+		#box2{
+			background: green;
+			left: 200px;
+		}
+		
+
+	</style>
+</head>
+<body>
+<div id="box">
+</div>	
+<div id="box2">
+</div>	
+<script>
+function drag(obj){
+	this.obj = obj;
+	this.disX = 0;
+	this.disY = 0;
+	this.init();
+	this.l = 0;
+	this.t = 0;
+
+}
+drag.prototype.init = function(){
+	console.log(this)  //实例化d时执行了1次，实例化d2(Drag2)时又执行了一次
+	var _this = this;
+	this.obj.onmousedown = function(ev){
+		_this.down(ev);
+		ev.preventDefault();
+		//return false;
+		
+	}	
+}
+drag.prototype.down = function(ev){
+	
+	 this.disX = ev.clientX-this.obj.offsetLeft;
+	 this.disY = ev.clientY-this.obj.offsetTop;
+	 var _this = this;
+	 document.onmousemove = function(ev){
+	 	_this.move(ev);
+	 }
+	 document.onmouseup = function(ev){
+	 	_this.up();
+	 }
+
+}
+drag.prototype.move = function(ev){
+	//console.log(ev.clientY-this.disY)
+	this.l = ev.clientX-this.disX;
+	this.t = ev.clientY-this.disY;
+	this.obj.style.left = this.l+'px';
+	this.obj.style.top = this.t+'px';
+}
+drag.prototype.up = function(){
+	document.onmousemove = null;
+	document.onmouseup = null;
+}
+
+function drag2(obj){
+	drag.call(this,obj);
+}
+for(var attr in drag.prototype){
+	drag2.prototype[attr] = drag.prototype[attr];
+}
+
+drag2.prototype.move = function(ev){
+	this.l = ev.clientX-this.disX;
+	this.t = ev.clientY-this.disY;
+	this.xian();
+	this.obj.style.left = this.l+'px';
+	this.obj.style.top = this.t+'px';
+}
+drag2.prototype.xian = function(){
+	if(this.l<0){
+		this.l = 0;
+	}else if(this.l>window.innerWidth-this.obj.offsetWidth){
+		this.l = window.innerWidth-this.obj.offsetWidth;
+	}
+
+	if(this.t<0){
+		this.t = 0;
+	}else if(this.t>window.innerHeight-this.obj.offsetHeight){
+		this.t = window.innerHeight-this.obj.offsetHeight;
+	}
+}
+
+var box = document.getElementById('box');
+var box2 = document.getElementById('box2');
+var d = new drag(box);
+var d2 = new drag2(box2);
+
+console.dir(d)
+console.dir(d2)
+</script>
+
+
+</body>
+</html>
