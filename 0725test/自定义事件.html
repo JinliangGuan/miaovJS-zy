@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>自定义事件</title>
+		<style>
+			#box{
+				width: 200px;
+				height: 200px;
+				background: red;
+			}
+
+
+
+		</style>
+
+	</head>
+	<body>
+		<div id="box"></div>
+	<script>
+	//事件存储器
+	function addEvent(obj,Events,fn){
+		obj.zdy  = obj.zdy || {};
+		obj.zdy[Events] = obj.zdy[Events] || [];
+		obj.zdy[Events].push(fn);
+
+	}
+	//事件触发器
+	function trigger(obj,Events){
+		if(!obj.zdy[Events]){
+			return;
+		}
+		for(var i=0;i<obj.zdy[Events].length;i++){
+			obj.zdy[Events][i].call(obj);
+		}
+	}
+
+	addEvent(document,'点击',function(){
+		alert(1);
+	})
+	addEvent(document,'点击',function(){
+		alert(2);
+	})
+	addEvent(document,'mouseover',function(){
+		alert(3);
+	})
+
+	document.onclick = function(){
+		trigger(this,'点击')
+	}
+
+	var box  = document.getElementById('box');
+	box.onmouseover = function(){
+		trigger(document,'mouseover')
+	}
+
+
+	</script>
+	</body>
+</html>

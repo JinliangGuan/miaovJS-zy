@@ -1,0 +1,187 @@
+<!DOCTYPE html >
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style type="text/css">
+	#box{
+		width: 875px;
+		height: 553px;
+		background: url(img/bg.png) no-repeat;
+		margin: 0 auto;
+		position: relative;
+	}
+	img{
+		position: absolute;
+		top: 114px;
+		height: 245px;
+		cursor: pointer;
+	}
+	#box img:nth-of-type(1){
+		width:448px;
+		left: 49px;
+	}
+	#box img:nth-of-type(2){
+		width: 248px;
+		left:559px;
+	}
+	i{
+		position: absolute;
+		bottom: 143px;
+		font-weight: bold;
+	}
+	#box i:nth-of-type(1){
+		left: 49px;
+	}
+	#box i:nth-of-type(2){
+		right: 297px;
+	}
+	a{
+		position: absolute;
+		top:54px;
+		width: 60px;
+		height: 20px;
+	}
+	#box a:nth-of-type(1){
+		left:23px;
+	}
+	#box a:nth-of-type(2){
+		left: 100px;
+	}
+	p{
+		height: 20px;
+		width: 200px;
+		position: absolute;
+		bottom: 150px;
+		text-align: center;
+	}
+	#box p:nth-of-type(1){
+		left: 136px;
+	}	
+	#box p:nth-of-type(2){
+		width: 130px;
+		left: 634px;
+	}
+</style>
+</head>
+
+<body>
+	<div id="box">
+		<a href="javascript:;" class="left"></a>
+		<a href="javascript:;" class="right"></a>
+		<img src="" alt="" class="left" id="img"/>
+		<img src="" alt="" class="right"/>
+		<i class="left"></i>
+		<i class="right"></i>
+		<p class="left"></p>
+		<p class="right"></p>
+	</div>
+	
+	<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript">
+		var lData = {
+			picSrc:['img/0.jpg', 'img/1.jpg', 'img/2.jpg', 'img/3.jpg', 'img/4.jpg'],
+			picTxt:['左一', '左二', '左三', '左四', '左五']
+		}
+		var rData = {
+			picSrc:['img/2.jpg', 'img/3.jpg', 'img/4.jpg'],
+			picTxt:['右一', '右二', '右三']
+		}
+	
+		
+		function tabPicFn(lData,rData){
+			this.lData = lData;
+			this.rData = rData;
+			this.ln = 0;
+			this.rn = 0;
+			this.gpBtns = document.getElementsByTagName('a');
+			this.imgs = document.getElementsByTagName('img');
+			this.pages = document.getElementsByTagName('i');
+			this.txts = document.getElementsByTagName('p');
+			this.init();
+		}
+		tabPicFn.prototype.init = function(){
+			this.leftTab();
+			this.rightTab();
+			this.lImgClk();
+			this.rImgClk();
+			this.lGpClk();
+			this.rGpClk();
+		}
+		tabPicFn.prototype.leftTab = function(){
+			this.imgs[0].src = this.lData.picSrc[this.ln];
+			this.txts[0].innerHTML = this.lData.picTxt[this.ln];
+			this.pages[0].innerHTML = this.ln+1+'/'+this.lData.picSrc.length;	
+		}
+		tabPicFn.prototype.rightTab = function(){
+			this.imgs[1].src = this.rData.picSrc[this.rn];
+			this.txts[1].innerHTML = this.rData.picTxt[this.rn];
+			this.pages[1].innerHTML = this.rn+1+'/'+this.rData.picSrc.length;	
+		}
+		
+		tabPicFn.prototype.lImgClk = function(){
+			var _this = this;
+			this.imgs[0].onclick = function(){
+				_this.ln++;
+				if(_this.ln >= _this.lData.picSrc.length){
+					_this.ln = 0;
+				}
+				//console.log(_this.ln)
+				_this.leftTab();
+			}
+			
+		}
+		
+		tabPicFn.prototype.rImgClk = function(){
+			var _this = this;
+			this.imgs[1].onclick = function(){
+				_this.rn++;
+				if(_this.rn >= _this.rData.picSrc.length){
+					_this.rn = 0;
+				}
+				//console.log(_this.ln)
+				_this.rightTab();
+			}	
+		}
+		
+		tabPicFn.prototype.rGpClk = function(){
+			var _this = this;
+			this.gpBtns[1].onclick = function(){
+				_this.ln++;
+				if(_this.ln >= _this.lData.picSrc.length){
+					_this.ln = 0;
+				}
+				_this.rn++;
+				if(_this.rn >= _this.rData.picSrc.length){
+					_this.rn = 0;
+				}
+				_this.leftTab();
+				_this.rightTab();
+			}
+			
+		}
+		tabPicFn.prototype.lGpClk = function(){
+			var _this = this;
+			this.gpBtns[0].onclick = function(){
+				_this.ln--;
+				if(_this.ln < 0){
+					_this.ln = _this.lData.picSrc.length-1;
+				}
+				_this.rn--;
+				if(_this.rn < 0){
+					_this.rn = _this.rData.picSrc.length-1;
+				}
+				_this.leftTab();
+				_this.rightTab();
+			}
+			
+		}
+		 
+		
+		
+		//console.log(lData,rData);
+		var go = new tabPicFn(lData,rData)
+
+	</script>
+</body>
+</html>

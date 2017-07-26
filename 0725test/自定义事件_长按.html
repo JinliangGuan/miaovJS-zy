@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>自定义事件_长按</title>
+		<style>
+			#box{
+				width: 200px;
+				height: 200px;
+				background: red;
+			}
+
+
+
+		</style>
+
+	</head>
+	<body>
+		<div id="box"></div>
+	<script>
+	//事件存储器
+	function addEvent(obj,Events,fn){
+		obj.zdy  = obj.zdy || {};
+		obj.zdy[Events] = obj.zdy[Events] || [];
+		obj.zdy[Events].push(fn);
+
+	}
+	//事件触发器
+	function trigger(obj,Events){
+		if(!obj.zdy[Events]){
+			return;
+		}
+		for(var i=0;i<obj.zdy[Events].length;i++){
+			obj.zdy[Events][i].call(obj);
+		}
+	}
+
+	addEvent(document,'点击',function(){
+		alert(1);
+	})
+	addEvent(document,'点击',function(){
+		alert(2);
+	})
+	addEvent(document,'mouseover',function(){
+		alert('覆盖事件');
+	})
+
+	/*document.onclick = function(){
+		trigger(this,'点击')
+	}*/
+
+
+/*-----------------------------自己写-------------------------------*/
+	function addEv(ele,type,fn){
+		ele.diyEv = ele.diyEv || {};
+		ele.diyEv[type] = ele.diyEv[type] || [];
+		ele.diyEv[type].push(fn) 
+	}
+	function fire(ele,type){
+		if(!ele.diyEv[type]){
+			return;
+		}
+		for(var i=0; i<ele.diyEv[type].length;i++){
+			ele.diyEv[type][i].call(ele);
+		}
+	}
+
+
+	var box  = document.getElementById('box');
+	addEv(box,'长按',fnAn);
+	function fnAn(){
+		alert('您触发了长按')
+	}
+
+	/*box.onmouseover = function(){
+		trigger(document,'mouseover')
+	}
+*/
+	box.onmousedown = function(ev){
+		dL = ev.clientX;
+		dT = ev.clientY;
+		var dDate = new Date();
+		box.onmouseup = function(ev){
+			disX = Math.abs(ev.clientX-dL);
+			disY = Math.abs(ev.clientY-dT);
+			
+			var nDate = new Date();
+			if(disX<5 && disY<5 && nDate-dDate>500){
+				console.dir(box)
+				fire(box,'长按')
+			}
+		}
+	}
+
+
+	</script>
+	</body>
+</html>

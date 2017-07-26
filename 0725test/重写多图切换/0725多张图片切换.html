@@ -1,0 +1,155 @@
+<!DOCTYPE html >
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style type="text/css">
+	#box{
+		width: 875px;
+		height: 553px;
+		background: url(img/bg.png) no-repeat;
+		margin: 0 auto;
+		position: relative;
+	}
+	img{
+		position: absolute;
+		top: 114px;
+		height: 245px;
+		cursor: pointer;
+	}
+	#box img:nth-of-type(1){
+		width:448px;
+		left: 49px;
+	}
+	#box img:nth-of-type(2){
+		width: 248px;
+		left:559px;
+	}
+	i{
+		position: absolute;
+		bottom: 143px;
+		font-weight: bold;
+	}
+	#box i:nth-of-type(1){
+		left: 49px;
+	}
+	#box i:nth-of-type(2){
+		right: 297px;
+	}
+	a{
+		position: absolute;
+		top:54px;
+		width: 60px;
+		height: 20px;
+	}
+	#box a:nth-of-type(1){
+		left:23px;
+	}
+	#box a:nth-of-type(2){
+		left: 100px;
+	}
+	p{
+		height: 20px;
+		width: 200px;
+		position: absolute;
+		bottom: 150px;
+		text-align: center;
+	}
+	#box p:nth-of-type(1){
+		left: 136px;
+	}	
+	#box p:nth-of-type(2){
+		width: 130px;
+		left: 634px;
+	}
+</style>
+</head>
+
+<body>
+	<div id="box">
+		<a href="javascript:;" class="left"></a>
+		<a href="javascript:;" class="right"></a>
+		<img src="" alt="" class="left" id="img"/>
+		<img src="" alt="" class="right"/>
+		<i class="left"></i>
+		<i class="right"></i>
+		<p class="left"></p>
+		<p class="right"></p>
+	</div>
+	
+	<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript">
+		var lData = {
+			picSrc:['img/0.jpg', 'img/1.jpg', 'img/2.jpg', 'img/3.jpg', 'img/4.jpg'],
+			picTxt:['左一', '左二', '左三', '左四', '左五']
+		}
+		var rData = {
+			picSrc:['img/2.jpg', 'img/3.jpg', 'img/4.jpg'],
+			picTxt:['右一', '右二', '右三']
+		}
+	
+		var lN = 0;
+		var rN = 0;
+		
+		function leftTab(){
+			$('img').eq(0).attr('src',lData.picSrc[lN]);
+			$('p').eq(0).html(lData.picTxt[lN]);
+			$('i').eq(0).html(lN+1+'/'+lData.picSrc.length)
+			
+		}
+		function rightTab(){
+			$('img').eq(1).attr('src',rData.picSrc[rN]);
+			$('p').eq(1).html(rData.picTxt[rN]);
+			$('i').eq(1).html(rN+1+'/'+rData.picSrc.length)
+		}
+		leftTab();
+		rightTab();
+		
+		$('img').eq(0).click(function(){
+			lN++;
+			if(lN>=lData.picSrc.length){
+				lN = 0;
+			}
+			leftTab();
+		})
+		$('img').eq(1).click(function(){
+			rN++;
+			if(rN>=rData.picSrc.length){
+				rN = 0;
+			}
+			rightTab();
+		})
+		
+		$('a').eq(0).click(function(){
+			lN--;
+			if(lN<0){
+				lN = lData.picSrc.length-1;
+			}
+			rN--;
+			if(rN<0){
+				rN = rData.picSrc.length-1;
+			}
+			leftTab();
+			rightTab();
+		})
+		
+		$('a').eq(1).click(function(){
+			lN++;
+			if(lN>=lData.picSrc.length){
+				lN = 0;
+			}
+			rN++;
+			if(rN>=rData.picSrc.length){
+				rN = 0;
+			}
+			leftTab();
+			rightTab();
+		})
+		
+		
+		
+	
+		console.log($('a').eq(1))
+	</script>
+</body>
+</html>
