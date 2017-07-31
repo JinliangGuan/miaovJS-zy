@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	
+
+
+<script>
+/*obj[Symbol.iterator] = function(){
+	let arr = Object.keys(obj);
+	let i = 0;
+	let len = arr.length;
+	return {
+		next(){
+			if( i<len ){
+				value:{
+					key:arr[i],
+					val:obj[arr[i++]]
+				},
+				done:false;
+			}else{
+				return {
+					value:null,
+					done:true
+
+				}
+			}
+		}
+	}
+}*/
+
+var arrayLike = {
+	'0':'a',
+	'1':'b',
+	'2':'c',
+	'3':'d',
+	'length':'4'
+}
+var arr2 = Array.from(arrayLike);
+//var arr2 = [].slice.call(arrayLike);
+arr2.push('x')
+console.log(arr2)
+
+</script>
+
+
+</body>
+</html>
