@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>0802ajax-找人搜索</title>
+</head>
+<body>
+<input type="text" placeholder="请输入要查找的用户名" id="uName"/>
+<input type="button" value="搜索" id="btn"/>
+
+
+
+<script>
+
+var uName = document.getElementById('uName');
+var btn = document.getElementById('btn');
+
+btn.onclick = function(){
+	var ajax = new XMLHttpRequest;
+	ajax.open("get","../php/ajax.php?user="+uName.value);
+	ajax.send();
+	ajax.onload = function(){
+		if(ajax.status >= 200 && ajax.status <= 207 || ajax.status == 304){
+			console.log(ajax.responseText)
+			var back = JSON.parse(ajax.responseText);
+			console.log(back)
+			var div = document.createElement('div')
+			if(back.code == 1){
+				div.innerHTML = back.data;
+			}else if(back.code == 0){
+				div.innerHTML = `我的名字叫${back.data.name}，年龄${back.data.age}，我的爱好是${back.data.hobby}，我想对大家说:“${back.data.info}”`
+
+				
+			}
+			//console.log(back.data)
+			document.body.appendChild(div)	
+		}else{
+			alert('请检查数据')
+		}
+	}
+}
+
+
+
+
+
+</script>
+
+	
+</body>
+</html>

@@ -2,6 +2,6 @@
 require('./wptest.css');
 
 console.log(fn1())*/
-
-import fn1 form './chukou.js';
-
+import {testWp} from './chukou.js';
+//require('')
+console.log(testWp());

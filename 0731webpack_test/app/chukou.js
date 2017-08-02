@@ -1,4 +1,4 @@
 
-export default function(){
+export function testWp(){
 	return 10; 
 }

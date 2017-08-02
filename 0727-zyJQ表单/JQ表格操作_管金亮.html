@@ -170,7 +170,7 @@ var starTab = $('#tab');
 showData(data);
 function showData(arr){
 	arr.forEach(function(e,i){
-		$(`<tr>
+		var tr =$(`<tr>
 			<td><input type="checkbox"></td>
 			<td>${e.id}</td>
 			<td>${e.name}</td>
@@ -180,11 +180,60 @@ function showData(arr){
 				<input type="button" value="上移">
 				<input type="button" value="下移">
 			</td>
-		</tr>`).appendTo($('#tab tBody').eq(0))
+		</tr>`)
+		//console.log(tr.find('input[type="button"]').eq(0))
+		
+		tr.find(':button').eq(0).on('click',function(){
+			$(this).closest('tr').remove();
+			var theID = $(this).closest('tr').children().eq(1).text();
+			var idx = idxById(theID)
+			data.splice(idx,1);
+			//console.log(data)
+		})
+		//上移
+		tr.find(':button').eq(1).on('click',function(){
+			var theTr = $(this).closest('tr');
+			if(theTr.prev()[0]){
+				theTr.insertBefore(theTr.prev());	
+				var theID = theTr.children().eq(1).text();
+				var idx = idxById(theID);
+				var prevData = data[idx-1];
+				data[idx-1]=data[idx];
+				data[idx]=prevData;
+				//console.log(data)
+			}else{
+				alert('已经是第一个了!')
+			}	
+		})
+		//下移
+		tr.find(':button').eq(1).on('click',function(){
+			var theTr = $(this).closest('tr');
+			if(theTr.next()[0]){
+				theTr.insertAfter(theTr.next());	
+				var theID = theTr.children().eq(1).text();
+				var idx = idxById(theID);
+				var nextData = data[idx+1];
+				data[idx+1]=data[idx];
+				data[idx]=nextData;
+			}else{
+				alert('已经是最后一个了!')
+			}	
+		})
 
-	})	
+
+		tr.appendTo($('#tab tBody').eq(0));
+	})
 }
-
+function idxById(dID){
+	var idx=-1;
+	for(var i=0;i<data.length;i++){
+		if(data[i].id == dID){
+			idx=i;	
+		}
+		
+	}
+	return idx;
+}
 
 
 
