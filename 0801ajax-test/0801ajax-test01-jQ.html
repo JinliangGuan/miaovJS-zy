@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>0801ajax-test</title>
+</head>
+<body>
+	
+用户名：<input type="text" id="user"/><span id="span"></span>
+
+<script src="../jquery-3.2.1.min.js"></script>
+<script>
+$('#user').blur(function(){
+	$.ajax({
+		url:'../php/get.php',
+		data:{
+			user:$('#user').val()
+		},
+		//dataType:'json',
+		success:function(data){
+			$('#span').text(data)	
+		}	
+
+	})
+})
+
+
+
+</script>
+
+</body>
+</html>

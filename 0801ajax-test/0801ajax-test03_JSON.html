@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>0801ajax-test</title>
+</head>
+<body>
+	
+用户名：<input type="text" id="user"/><span id="span"></span>
+<script>
+var user = document.getElementById('user');
+var span = document.getElementById('span');	
+user.onblur = function(){
+	
+	//创建一个ajax对象
+	var ajax = new XMLHttpRequest();
+	//填写请求的地址
+	ajax.open('get','../php/get_json.php?user='+user.value);
+	//发送请求
+	ajax.send();
+	//等待服务器响应
+	ajax.onload = function(){
+		var data = JSON.parse(ajax.responseText);
+		console.log(data)
+		if(data.code){
+			user.style.borderColor = 'red';
+		}else{
+			user.style.borderColor='green';
+		}
+		span.innerHTML = data.msg;
+	}
+	
+}
+
+
+
+
+</script>
+
+</body>
+</html>
