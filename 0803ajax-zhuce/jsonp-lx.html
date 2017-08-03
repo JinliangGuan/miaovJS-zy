@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8" />
+	<title>Document</title>
+</head>
+<body>
+	<button id="btn">按钮</button>
+	<div id="box"></div>
+<script type="text/javascript">
+	var btn = document.getElementById('btn');
+	var box = document.getElementById('box');
+
+	var a = JSON.parse('{"say":"真牛X，这都可以.跨域了，哈哈哈"}')
+	function jsonData(theJson){
+		box.innerHTML = JSON.parse(theJson).say;
+	}
+
+	function addScriptTag(goSrc) {
+		scriptTag= document.createElement('script');
+		scriptTag.src = goSrc;
+		document.body.appendChild(scriptTag)
+	}
+	btn.onclick = function(){
+		addScriptTag('http://localhost/0803ajax-zhuce/jsonp_data.js')
+	}
+	
+	
+	
+</script>
+</body>
+</html>
