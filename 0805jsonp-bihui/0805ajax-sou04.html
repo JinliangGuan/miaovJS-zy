@@ -1,0 +1,83 @@
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+ 	<meta charset="UTF-8">
+ 	<title>0805ajax-搜索接口</title>
+ 	<style>
+ 		body{
+ 			transition: 1s;
+ 		}
+ 		a{
+ 			text-decoration: none;
+ 			color:#666;
+ 		}
+
+ 	</style>
+ </head>
+ <body>
+
+<input type="text" id="sou" >
+<ul id="retxt"></ul>
+<script>
+const sou = document.getElementById('sou');
+const retxt = document.getElementById('retxt');
+
+
+
+sou.onkeyup = function(){
+	getJson({
+		url:'https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su',
+		data:{
+			wd:sou.value
+		},
+		success:function(data){
+			let str = '';
+			for(var i=0;i<data.s.length;i++){
+				str += `<li><a href="http://www.baidu.com/s?ie=utf-8&f=3&rsv_bp=1&tn=baidu&wd=${data.s[i]}&oq=122&rsv_pq=865fb88d00008037&rsv_t=b08d3fl4mFNWlE6mQ%2FQUS5UET0XqY11DLvWUS9gFCg9CdbpH%2Bei03xI73B4&rqlang=cn&rsv_enter=1&rsv_sug3=3&rsv_sug1=2&rsv_sug7=100&rsv_sug2=1&prefixsug=2%2526lt%253B&rsp=0&inputT=5654&rsv_sug4=5654">${data.s[i]}</a></li>`;
+			}
+			retxt.innerHTML = str;	
+		}
+	})
+}
+
+function getJson(dataObj){
+	let settings = {
+		url:'',
+		data:{},
+		success:function(){}
+	}
+	//有配置走配置，没配置走默认
+	//Object.assign(settings,dataObj);
+
+	for(var attr in dataObj){
+		settings[attr] = dataObj[attr];
+	}
+
+	//新建一个随机名
+	let fnName = 'jQquery'+Math.random()+(+new Date);
+	fnName = fnName.replace('0.','_')
+	//console.log(fnName)
+	//声明一个随机名函数暴露在全局
+	window[fnName] = function(data){
+		settings.success(data);
+	}
+
+	//把data的字段拼接起来
+	let arr = [];
+	for(var k in settings.data){
+		arr.push( k +'='+settings.data[k]);
+	}
+	let ziduan = arr.join('&');
+	//console.log(ziduan)
+	oData = document.createElement('script');
+	oData.src = settings.url+'?'+ziduan+'&cb='+fnName;
+	document.getElementsByTagName('head')[0].appendChild(oData);
+	document.getElementsByTagName('head')[0].removeChild(oData);
+	
+}
+
+
+</script>
+ 	
+ </body>
+ </html>

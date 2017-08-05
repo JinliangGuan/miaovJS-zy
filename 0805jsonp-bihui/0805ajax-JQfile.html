@@ -1,0 +1,78 @@
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+ 	<meta charset="UTF-8">
+ 	<title>0805ajax-file</title>
+ 	<style>
+ 		body{
+ 			transition: 1s;
+ 		}
+
+ 	</style>
+ </head>
+ <body>
+ <input type="file" id="file_up">
+<input type="button" id="btn" value="上传">
+<p id="txt">0%</p>
+<script src="../jquery-3.2.1.min.js"></script>
+<script>
+/*var btn = document.getElementById('btn');
+var fileUp = document.getElementById('file_up');
+var txt = document.getElementById('txt');
+btn.onclick = function(){
+	var ajax = new XMLHttpRequest;
+	ajax.open('post','php/post_file.php');
+	
+	const ftp = fileUp.files[0]
+	const formData = new FormData;
+	//console.log(formData)
+	formData.append('file',ftp);
+	ajax.upload.onprogress = function(ev){
+		var jindu = Math.floor((ev.loaded/ev.total)*100);
+		//console.log(jindu)
+		txt.innerHTML = jindu+'%';
+		if(jindu == 100){
+			document.body.style.background = 'skyblue';
+		}
+	}
+	ajax.send(formData);
+}*/
+
+/*var fd = new FormData(document.getElementById("fileinfo"));
+fd.append("CustomField", "This is some extra data");
+$.ajax({
+  url: "stash.php",
+  type: "POST",
+  data: fd,
+  processData: false,  // 告诉jQuery不要去处理发送的数据
+  contentType: false   // 告诉jQuery不要去设置Content-Type请求头
+});*/
+
+
+
+$('#btn').click(function(){
+	let fd = new FormData();
+	let ffile = $('#file_up')[0].files[0];
+	//console.log(ffile);
+	fd.append("file",ffile);
+	$.ajax({
+		url:'php/post_file.php',
+		type:'POST',
+		data:fd,
+		cache:false,
+		processData:false,
+		contentType:false,
+		success:function(){
+			console.log('上传完毕!')
+		}
+		
+	})
+})
+
+
+
+
+</script>
+ 	
+ </body>
+ </html>

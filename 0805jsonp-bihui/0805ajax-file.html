@@ -1,0 +1,46 @@
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+ 	<meta charset="UTF-8">
+ 	<title>0805ajax-file</title>
+ 	<style>
+ 		body{
+ 			transition: 1s;
+ 		}
+
+ 	</style>
+ </head>
+ <body>
+ <input type="file" id="file_up">
+<input type="button" id="btn" value="上传">
+<p id="txt">0%</p>
+<script>
+var btn = document.getElementById('btn');
+var fileUp = document.getElementById('file_up');
+var txt = document.getElementById('txt');
+btn.onclick = function(){
+	var ajax = new XMLHttpRequest;
+	ajax.open('post','php/post_file.php');
+	
+	const ftp = fileUp.files[0]
+	const formData = new FormData;
+	//console.log(formData)
+	formData.append('file',ftp);
+	ajax.upload.onprogress = function(ev){
+		var jindu = Math.floor((ev.loaded/ev.total)*100);
+		//console.log(jindu)
+		txt.innerHTML = jindu+'%';
+		if(jindu == 100){
+			document.body.style.background = 'skyblue';
+		}
+	}
+	ajax.send(formData);
+}
+
+
+
+
+</script>
+ 	
+ </body>
+ </html>
