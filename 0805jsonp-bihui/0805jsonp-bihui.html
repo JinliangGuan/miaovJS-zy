@@ -1,0 +1,31 @@
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+ 	<meta charset="UTF-8">
+ 	<title>0805jsonp-test</title>
+ </head>
+ <body>
+<input type="button" id="btn" value="获取">
+<p id="txt"></p>
+<script>
+var btn = document.getElementById('btn');
+var txt = document.getElementById('txt');
+function callback(data){
+	data = eval('('+data+')');
+	//console.log(data);
+	txt.innerHTML = data.say;
+}
+
+btn.onclick = function(){
+	addScriptTag('http://localhost/0805jsonp-bihui/cb.js');
+}
+function addScriptTag(theSrc){
+	var ScriptTag = document.createElement('script');
+	ScriptTag.src = theSrc;
+	document.getElementsByTagName('head')[0].appendChild(ScriptTag);
+}	
+
+</script>
+ 	
+ </body>
+ </html>
