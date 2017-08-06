@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>0806瀑布</title>
+	<style>
+
+	      *{
+	        margin: 0;
+	        padding: 0;
+	      }
+	      .pic{
+	        width: 236px;
+	        box-shadow:0 1px 3px rgba(0,0,0,.3);
+	        overflow:hidden;
+	        margin-top:10px;
+	      }
+	      img{
+	        width:236px;
+	        border: none;
+	        display: block;
+	      }
+	      ul{
+	        list-style: none;
+	        margin: 0 auto;
+	        /*border:1px solid #000;*/
+	        width:1050px;
+	        opacity: 0;
+	        overflow: hidden;
+	        transition: 0.5s;
+	      }
+	      li{
+	        /*position: absolute;*/
+	        border: 1px solid #ccc;
+	        float: left;
+	        margin: 8px;
+	        width:236px;
+	      }
+
+		 #div1{
+			width:100%;
+			height:3px;
+			position: absolute;
+			top:50%;
+		}
+		#num{
+			position: absolute;
+			width:100%;
+			height: 3px;
+			line-height: 3px;
+			text-align: center;
+			top:-1px;
+			font-size: 30px;
+		}
+		#div2{
+			width:0;
+			height: 3px;
+			background: #317EF3;
+			transition: .2s;
+			opacity:1;
+		}
+
+
+	 </style>
+</head>
+<body>
+<div id="div1">
+	<div id="div2"></div>
+	<span id="num">0%</span>
+</div>
+
+
+<ul id="ul">
+    	<li></li>
+    	<li></li>
+    	<li></li>
+    	<li></li>
+
+</ul>	
+<script src="../jquery-3.2.1.min.js"></script>
+<script>
+
+let num = 0;
+let jindu = 0;
+let ul = $('#ul');
+ul.children('li').each(function(i,e){
+	console.log(e.scrollHeight)
+})
+$.ajax({
+	dataType:'json',
+	url:'http://www.wookmark.com/api/json/popular?page=2&callback=?',
+	success:function(data){
+		$.each(data,function(i,e){
+			const div = $('<div class="pic"></div>');
+			const a = $('<a href="'+e.image+'"></a>')
+			const img = $('<img src="'+e.preview+'"/>')
+
+			img[0].onload = function(){
+				loadBar();
+				var idx = findMinIdx();
+				a.append(img);
+				div.append(a);
+
+				$('#ul li').eq(idx).append(div);
+
+			}
+			img[0].onerror = function(){
+				loadBar();
+			}
+			
+		})
+
+
+	}
+})
+
+function loadBar(){
+	num++;
+	jindu = Math.floor((num/50)*100);
+	$('#num').text(jindu+'%');
+	$('#div2').css({
+		width:jindu+'%',
+		opacity:1-(num/50)
+	})
+
+	if(num==50){
+		setTimeout(function(){
+			$('#ul').css({
+				opacity:1	
+			})
+			$('#num').hide(500);
+		},500)
+	}
+}
+
+function findMinIdx(){
+	
+	var idx = 0;
+	var min = ul.children('li').eq(0)[0].scrollHeight;
+	ul.children('li').each(function(i,e){
+		if(e.scrollHeight<min){
+			idx = i;
+		}
+	})
+	return idx;
+
+}
+
+</script>
+</body>
+</html>
