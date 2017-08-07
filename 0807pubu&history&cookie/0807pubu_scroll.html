@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>0807瀑布_滚动加载</title>
+	<style>
+
+	      *{
+	        margin: 0;
+	        padding: 0;
+	      }
+	      .pic{
+	        width: 236px;
+	        box-shadow:0 1px 3px rgba(0,0,0,.3);
+	        overflow:hidden;
+	        margin-top:10px;
+	      }
+	      img{
+	        width:236px;
+	        border: none;
+	        display: block;
+	      }
+	      ul{
+	        list-style: none;
+	        margin: 0 auto;
+	        /*border:1px solid #000;*/
+	        width:1050px;
+	        /* opacity: 0; */
+	        overflow: hidden;
+	        transition: 0.5s;
+	      }
+	      li{
+	        /*position: absolute;*/
+	        border: 1px solid #ccc;
+	        float: left;
+	        margin: 8px;
+	        width:236px;
+	      }
+
+		 #div1{
+			width:100%;
+			height:3px;
+			position: absolute;
+			top:50%;
+		}
+		#num{
+			position: absolute;
+			width:100%;
+			height: 3px;
+			line-height: 3px;
+			text-align: center;
+			top:-1px;
+			font-size: 30px;
+		}
+		#div2{
+			width:0;
+			height: 3px;
+			background: #317EF3;
+			transition: .2s;
+			opacity:1;
+		}
+		#ju{
+			
+			/* opacity: 0.2; */
+			position: absolute;
+			background: rgba(255,255,255,0.2);
+		}
+		#ju img{
+			position: absolute;
+			width: 236px;
+			height: 170px;;
+		}
+		#ju span{
+			display: block;
+			width:236px;
+			height: 170px;
+			text-align: center;
+			line-height: 170px;
+			font-size: 16px;
+			position: absolute;
+			
+		}
+
+
+	 </style>
+</head>
+<body>
+<!-- <div id="div1">
+	<div id="div2"></div>
+	<span id="num">0%</span>
+</div> -->
+<div id="ju">
+	<img src="timg.gif" alt="">
+	<span id="juNum"></span>
+</div>
+
+<ul id="ul">
+    	<li></li>
+    	<li></li>
+    	<li></li>
+    	<li></li>
+
+</ul>	
+<script src="../jquery-3.2.1.min.js"></script>
+<script>
+
+let num = 0;
+let pn=0;
+let jindu = 0;
+let ul = $('#ul');
+var onOff = true;
+
+
+//小菊花位置
+var winW = $(window).innerWidth();
+var winH = $(window).innerHeight();
+ juPos()
+function juPos(){	
+	var juPic = $('#ju').find('img').eq(0);
+	juL = (winW-juPic.width())/2;
+	juT = (winH-juPic.height())/2+$(window).scrollTop();
+	//console.log(juT,juL)
+	$('#ju').css({
+		'width':winW,
+		'height':winH,
+	})
+	juPic.css({
+		'top':juT,
+		'left':juL,
+	})
+	$('#juNum').css({
+		'top':juT,
+		'left':juL,
+	})
+}
+
+juFn(false)
+addPic(pn)
+
+$(window).scroll(function(){
+	var minCol = ul.find('li')[findMinIdx()];
+	//console.log(minCol)
+	if(winH+$(window).scrollTop() >= minCol.scrollHeight){
+		if(onOff){
+			pn++;
+			console.log(pn)
+			addPic(pn)
+		}	
+	}
+
+})
+
+
+
+function addPic(pn){
+	onOff = false;
+	$.ajax({
+		dataType:'jsonp',
+		url:'http://www.wookmark.com/api/json/popular?&callback=?',
+		data:{
+			page:pn
+		},
+		success:function(data){
+			var zongNum = data.length;
+			if(zongNum == 0){
+				alert('没有了');
+
+			}else{
+				juFn(true);
+				$.each(data,function(i,e){
+					const div = $('<div class="pic"></div>');
+					const a = $('<a href="'+e.image+'"></a>')
+					const img = $('<img src="'+e.preview+'"/>')
+					
+					console.log(zongNum)
+					img[0].onload = function(){
+						loadBar(zongNum);
+						var idx = findMinIdx();
+						a.append(img);
+						div.append(a);
+
+						$('#ul li').eq(idx).append(div);
+
+					}
+					img[0].onerror = function(){
+						loadBar(zongNum);
+					}
+					
+				})
+			}
+		}
+	})
+}
+
+
+
+function juFn(onOff){
+	if(onOff){
+		 juPos();
+		$('#ju').show(200);
+		console.log('show')
+
+	}else{
+		$('#ju').hide(200);
+	}
+}
+
+
+function loadBar(zongNum){
+	num++;
+	jindu = Math.floor((num/zongNum)*100);
+	$('#juNum').text(jindu+'%');
+
+	if(num==zongNum){
+		onOff = true;
+		juFn(false);
+		num = 0;
+	}
+}
+
+function findMinIdx(){	
+	var idx = 0;
+	var min = ul.children('li').eq(0)[0].scrollHeight;
+	ul.children('li').each(function(i,e){
+		if(e.scrollHeight<min){
+			idx = i;
+		}
+	})
+	return idx;
+
+}
+
+</script>
+</body>
+</html>
