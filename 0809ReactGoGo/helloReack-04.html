@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>hellowReact</title>
+  <style>
+  	#app p{
+  		width:100px;
+  		height:100px;
+  		font-size: 80px;
+  		text-align:center;
+  	}
+  	#app .red{
+  		color:red;
+  	}
+  </style>
+
+
+
+</head>
+<body>
+<div id="app"></div>
+
+<script type="text/javascript" src="src/react.js"></script>
+<script type="text/javascript" src="src/react-dom.js"></script>
+<script type="text/javascript" src="src/browser.min.js"></script>
+
+
+
+<script type="text/babel">
+let MM = React.createClass({
+	fn:function(){
+		var nIdx = this.state.idx;
+		nIdx++;
+		this.setState({
+			idx:nIdx,
+
+		})
+
+	},
+	render:function(){
+		var txt;
+		if(this.state.arr[this.state.idx] == "会"){
+			txt = <p className="red">{this.state.arr[this.state.idx]}</p>;
+		}else{
+			txt = <p>{this.state.arr[this.state.idx]}</p>;
+		}
+
+		this.state.arr[this.state.idx];
+
+		return (
+			<div>
+				<button onClick={this.fn}>按钮</button>
+
+				<p>{txt}</p>
+			</div>
+		)
+	},
+	getInitialState:function(){
+		return {
+			idx:0,
+			arr:['你','觉','得','学','会','了','吗']
+		}
+	}
+})
+
+
+ReactDOM.render(
+	<MM />,
+	document.getElementById('app')
+)
+</script>
+
+</body>
+</html>
