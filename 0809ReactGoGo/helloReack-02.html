@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>hellowReact</title>
+</head>
+<body>
+<div id="app"></div>
+
+<script type="text/javascript" src="src/react.js"></script>
+<script type="text/javascript" src="src/react-dom.js"></script>
+<script type="text/javascript" src="src/browser.min.js"></script>
+
+
+
+<script type="text/babel">
+  let H = React.createClass({
+  	addClick:function(){
+  		var addNum = this.state.num;
+  		addNum += 200;
+	  	this.setState({
+	  			num:addNum
+	  		})
+  		
+  	},
+  	render:function(){
+  		return (
+				<div>
+					<h1 className="active">Hello!React</h1>
+					<p>{this.state.num}</p>
+					<input type="button" value="按钮" onClick={this.addClick}/>
+				</div>
+      )
+   },
+   getInitialState:function(){
+   	return {
+   		num:100
+   	}
+   		
+   }
+  })
+
+
+	ReactDOM.render(
+		<H />,
+		document.getElementById('app')
+
+	)
+
+
+/*<ul>
+					{
+						this.state.arr.map(function(e,i){
+							return <li key={i}>{e}</li>
+						})
+						//this.state.arr[this.state.idx]
+					}
+				</ul>*/
+</script>
+
+</body>
+</html>
