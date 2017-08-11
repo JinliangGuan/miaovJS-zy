@@ -87,27 +87,27 @@ input[type="text"] {
 		<li class="addPre">
 			<label>名字： <input type="text" name="" /></label>
 			<label>年龄： <input type="text" /></label>
-			<input type="button" value="添加" />
+			<input type="button" value="添加" id="addBtn"/>
 		</li>
 		<li>
 			<span>排序</span>
-			<select>
-				<option value="price">年龄</option>
-				<option value="id">姓名</option>
+			<select id="sort_mode">
+				<option value="id">ID</option>
+				<option value="age">年龄</option>
 			</select>
-			<select>
-				<option value='2'>从高到底</option>
-				<option value='1'>从低到高</option>
+			<select id="sort_rule">
+				<option value='max'>从高到底</option>
+				<option value='min'>从低到高</option>
 			</select>
-			<input type="button" value="提交" />
-			<input type="button" value="批量删除" />
+			<input type="button" value="提交" id="sort_sub"/>
+			<input type="button" value="批量删除" id="delBtn"/>
 		</li>
 	</ul>
 	<table id="tab" width="600" align="center" border="1">
 		<thead>
 			<th>全选<input type="checkbox" id="checkAll"></th>
 			<th index="id">编号</th>
-			<th>商品</th>
+			<th>明星</th>
 			<th index="price">年龄</th>
 			<th>操作</th>
 		</thead>
@@ -167,6 +167,8 @@ var data = [
   	 * */
 //渲染页面==========================
 var starTab = $('#tab');
+var idNum = 6;
+
 showData(data);
 function showData(arr){
 	arr.forEach(function(e,i){
@@ -192,6 +194,7 @@ function showData(arr){
 		})
 		//上移
 		tr.find(':button').eq(1).on('click',function(){
+
 			var theTr = $(this).closest('tr');
 			if(theTr.prev()[0]){
 				theTr.insertBefore(theTr.prev());	
@@ -201,12 +204,13 @@ function showData(arr){
 				data[idx-1]=data[idx];
 				data[idx]=prevData;
 				//console.log(data)
+				trColor()
 			}else{
 				alert('已经是第一个了!')
 			}	
 		})
 		//下移
-		tr.find(':button').eq(1).on('click',function(){
+		tr.find(':button').eq(2).on('click',function(){
 			var theTr = $(this).closest('tr');
 			if(theTr.next()[0]){
 				theTr.insertAfter(theTr.next());	
@@ -215,24 +219,113 @@ function showData(arr){
 				var nextData = data[idx+1];
 				data[idx+1]=data[idx];
 				data[idx]=nextData;
+				trColor()
 			}else{
 				alert('已经是最后一个了!')
 			}	
 		})
-
-
+		//选中按钮单击
+		tr.find('input[type="checkbox"]').on('click',function(){
+			isAllCheck()
+		})
 		tr.appendTo($('#tab tBody').eq(0));
 	})
 }
+//全选按钮
+$('#checkAll').on('click',function(){
+	if($('#checkAll').prop('checked')){
+		$('tBody input[type="checkbox"]').prop('checked',true);
+	}else{
+		$('tBody input[type="checkbox"]').prop('checked',false);
+	}
+	
+})
+//批量删除按钮
+$('#delBtn').on('click',function(){
+	$('tBody input[type="checkbox"]').each(function(i,e){
+		//console.log(e.checked)
+		if(e.checked){
+			$(e).closest('tr').remove();
+			var theID = $(this).closest('tr').children().eq(1).text();
+			var idx = idxById(theID)
+			data.splice(idx,1);
+		}
+		trColor()
+	})
+})
+
+//添加按钮
+var addTr = $('.addPre').eq(0);
+$('#addBtn').on('click',function(){
+	if(addTr.find('input').eq(0).val() =='' || addTr.find('input').eq(1).val()==''){
+		alert('请输入姓名或年龄')
+	}else{
+		var newStar = {};
+		newStar.name = addTr.find('input').eq(0).val();
+		newStar.age = addTr.find('input').eq(1).val();
+		newStar.id = idNum++;
+		data.push(newStar)
+		$('tbody').eq(0).text('');
+		showData(data);
+		addTr.find('input').eq(0).val('');
+		addTr.find('input').eq(1).val('');
+		trColor()
+	}
+})
+
+//排序按钮
+$('#sort_sub').on('click',function(){
+	data.sort(function(a,b){
+		if($('#sort_mode').val() == 'id'){
+			if($('#sort_rule').val() == 'max'){
+				return b.id-a.id;	
+			}else{
+				return a.id-b.id;	
+			}
+			
+		}
+		if($('#sort_mode').val() == 'age'){
+			if($('#sort_rule').val() == 'max'){
+				return b.age-a.age;	
+			}else{
+				return a.age-b.age;	
+			}
+			
+		}		
+	})
+	$('tbody').eq(0).text('');
+	showData(data);
+	trColor()
+})
+
 function idxById(dID){
 	var idx=-1;
 	for(var i=0;i<data.length;i++){
 		if(data[i].id == dID){
 			idx=i;	
-		}
-		
+		}	
 	}
 	return idx;
+}
+
+function isAllCheck(){
+	let m = 0;
+	$('tBody input[type="checkbox"]').each(function(i,e){
+		//console.log(e.checked)
+		if(e.checked){
+			m++;
+		}
+	})
+	if(m == $('tBody input[type="checkbox"]').length){
+		$('#checkAll').prop('checked',true)
+	}else{
+		$('#checkAll').prop('checked',false)
+	}
+}
+trColor()
+function trColor(){
+	$('tBody').find('tr:even').css('background','#ccc')
+	$('tBody').find('tr:odd').css('background','#eee')
 }
 
 
