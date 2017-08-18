@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>组件</title>
+</head>
+<body>
+<div id="app">
+        <v-div></v-div>
+        <v-h1></v-h1>
+        <v-h2></v-h2>
+
+</div>
+<script src="vue.js"></script>
+<script>
+
+        Vue.component('v-div',{
+                template:'<div>我是自定义标签</div>'
+        })
+        var child = {
+                template:'<h1 v-on:click="fn">我是标题{{num}}</h1>',
+                methods:{
+                        fn:function(){
+                                alert(1)
+                        },
+                        fn2(){
+                                alert(2)
+                        }
+                },
+                data(){
+                        return{
+                                num:10
+                        }
+                }
+        }
+        var child2 = {
+                template:'<h2>我是标题2</h2>'
+        }
+        var app = new Vue({
+                el:"#app",
+                components:{
+                        'v-h1':child,
+                        'v-h2':child2
+                }
+
+        })
+
+
+</script>
+</body>
+</html>

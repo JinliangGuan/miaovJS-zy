@@ -9,24 +9,25 @@
 </head>
 
 <body>
-    <section class="todoapp">
+    <section class="todoapp" id="todosApp">
         <div>
             <header class="header" >
                 <h1>todos</h1>
-                <input class="new-todo" placeholder="请输入内容" value="">
+                <input class="new-todo" placeholder="请输入内容" v-model="val" v-on:keyup.enter="addOne">
             </header>
             <section class="main">
-                <input class="toggle-all" type="checkbox" checked="">
+                <input class="toggle-all" type="checkbox" v-model:checked="isAll" v-on:click="allFn">
                 <ul class="todo-list">
-                    <li class="completed">
+                    <li class="completed" v-for="item in list">
                         <div class="view">
-                            <input class="toggle" type="checkbox" checked="">
-                            <label>多多对对对</label>
-                            <button class="destroy"></button>
+                            <input class="toggle" type="checkbox" v-model:checked="item.checked">
+                            <label>{{item.con}}</label>
+                            <button class="destroy" v-on:click="removeFn(item)"></button>
                         </div>
-                        <!-- <input class="edit" value="多多对对对"> -->
+                        <input class="edit" value="多多对对对">
                     </li>
                 </ul>
+
             </section>
             <!-- <footer class="footer">
 	            <span class="todo-count">
@@ -36,7 +37,46 @@
             </footer> -->
         </div>
     </section>
-<script src="src/js/vue.js" charset="utf-8"></script>
-<script src="comm/app.js" charset="utf-8"></script>
+<script src="js/vue.js" charset="utf-8"></script>
+<script>
+        var todosApp = new Vue({
+                el:'#todosApp',
+                data:{
+                        list:[
+                                {con:'白日依山尽',checked:true,id:1},
+                                {con:'粒粒皆辛苦',checked:false,id:2},
+                                {con:'更上一层楼',checked:false,id:3}
+                        ],
+                        val:'',
+                        isAll:false
+                },
+                computed:{
+
+                },
+                methods:{
+                    removeFn:function(item){
+                        this.list = this.list.filter((e)=>{
+                            return e != item;
+                        })
+                    },
+                    addOne:function(){
+                        this.list.push({
+                            con:this.val,
+                            checked:false,
+                            id:+new Date
+                        })
+                        this.val = '';
+                    },
+                    allFn:function(){
+                        this.list.forEach((e)=>{
+                            e.checked = this.isAll;
+                        })
+                    }
+                }
+
+
+        })
+</script>
+
 </body>
 </html>
