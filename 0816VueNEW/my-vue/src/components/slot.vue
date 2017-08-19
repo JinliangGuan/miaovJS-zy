@@ -1,5 +1,5 @@
 <template>	
-  <button><slot></slot>我是个按钮</button>
+	<button v-on:click="incrementCounter">{{counter}}</button>
 </template>
 
 <script>
@@ -7,13 +7,18 @@
 
 export default {
   name: 'children',
+  props:[],
   data () {
     return {
-        val:{}
+        counter:0  
     }
+  },
+  methods:{
+  	incrementCounter(){
+  		this.counter += 1;
+  		this.$emit('increment');
+  	}
   }
-
- 
 }
 </script>
 

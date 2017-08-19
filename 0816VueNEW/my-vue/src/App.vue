@@ -1,10 +1,8 @@
 <template>
   <div id="app">
-    
-    <children>
-    	<span>我是要显示出来的文字</span>
-    	<p>还有哦</p>
-    </children>	
+    <p>{{total}}</p>
+	  <children v-on:increment="incermentTotal"></children>		
+	  
   </div>
 </template>
 
@@ -15,12 +13,13 @@ export default {
   name:'app',
   data(){
   	return{
-  		 
-  	}
-	              
+  		 total:0
+  	}              
   },
   methods: {
-    
+  	incermentTotal(){
+  		this.total += 1
+   	}
   },
   components:{
   	children
