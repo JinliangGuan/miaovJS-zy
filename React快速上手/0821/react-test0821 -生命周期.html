@@ -13,15 +13,35 @@
 	
 	<script>
 		
-		var logMixin = {
+		
+	
+		var txt = React.createClass({
+			propTypes:{
+				initVal:React.PropTypes.string,
+			},
+			getInitialState:function(){
+				return {
+					text:this.props.initVal,
+				};
+			},
+			_textChange:function(ev){
+				if(ev.target.value.length<=10){
+					this.setState({
+						text:ev.target.value,	
+					})
+				}
+			},
 			_log:function(methodName,args){
 				console.log(methodName,args)
 			},
 			componentWillUpdate:function(){
 				this._log('componentWillUpdate',arguments)
 			},
-			componentDidUpdate:function(oldProps,oldState){
+			componentDidUpdate:function(oldPorps,oldState){
 				this._log('componentDidUpdate',arguments);
+				if(this.state.text.length>10){
+					this.replaceState(oldState);
+				}
 			},
 			componentWillMount:function(){
 				this._log('componentWillMount',arguments)
@@ -34,33 +54,10 @@
 			},
 			componentWillUnmount:function(){
 				this._log('componentWillUnmount',arguments)
-			}
-		}
-		
-		
-		var textChange_Mix = {
-			_textChange:function(ev){
-				if(ev.target.value.length<=10){
-					this.setState({
-						text:ev.target.value,	
-					})
-				}
-			}
-		}
-		
-	
-		var txt = React.createClass({
-			name:'txt',
-			mixins:[logMixin,textChange_Mix],
-			propTypes:{
-				initVal:React.PropTypes.string,
 			},
-			getInitialState:function(){
-				return {
-					text:this.props.initVal,
-				};
-			},
-			
+			/*shouldComponentUpdate:function(){
+				this._log('shouldComponentUpdate',arguments)
+			},*/
 			componentWillReceiveProps:function (newProps){
 				this.setState({
 					text: newProps.initVal,
@@ -80,35 +77,6 @@
 		})
 		
 		
-		/*var txt = React.createClass({
-			_log:function(methodName,args){
-				console.log(methodName,args)
-			},
-			componentWillUpdate:function(){
-				this._log('componentWillUpdate',arguments)
-			},
-			componentDidUpdate:function(){
-				this._log('componentDidUpdate',arguments)
-			},
-			componentWillMount:function(){
-				this._log('componentWillMount',arguments)
-			},
-			componentDidMount:function(){
-				this._log('componentDidMount',arguments)
-				var thisNode = ReactDOM.findDOMNode(this);
-				
-				console.log(thisNode.offsetWidth)
-			},
-			componentWillUnmount:function(){
-				this._log('componentWillUnmount',arguments)
-			},
-			shouldComponentUpdate:function(){
-				this._log('shouldComponentUpdate',arguments)
-			},
-			render:function(){
-				return React.DOM.h1(null,'hello')
-			}
-		})*/
 		
 		var txtObj = ReactDOM.render(
 			React.createElement(txt,{
