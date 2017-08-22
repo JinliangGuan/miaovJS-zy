@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<div id="app"></div>
+		<button id="btn">按钮</button>
+	<script type="text/javascript" src="../react.js"></script>
+	<script type="text/javascript" src="../react-dom.js"></script>
+		
+	
+	<script>
+		
+		var logMixin = {
+			_log:function(methodName,args){
+				console.log(this.name+'::'+methodName,args)
+			},
+			componentWillUpdate:function(){
+				this._log('componentWillUpdate',arguments)
+			},
+			componentDidUpdate:function(oldProps,oldState){
+				this._log('componentDidUpdate',arguments);
+			},
+			componentWillMount:function(){
+				this._log('componentWillMount',arguments)
+			},
+			componentDidMount:function(){
+				this._log('componentDidMount',arguments)
+				var thisNode = ReactDOM.findDOMNode(this);
+			},
+			componentWillUnmount:function(){
+				this._log('componentWillUnmount',arguments)
+			}
+		}
+		
+		var Counter = React.createClass({
+			name:'Counter',
+			mixins:[logMixin],
+			propsType:{
+				count:React.PropTypes.number.isRequired,
+				
+			},
+			render:function(){
+				return React.DOM.span(null,this.props.count)
+			}
+		})
+		
+		
+		
+		
+		
+		var txt = React.createClass({
+			name:'txt',
+			propTypes:{
+				initVal:React.PropTypes.string,
+			},
+			mixins:[logMixin],
+			getInitialState:function(){
+				return {
+					text:this.props.initVal,
+				};
+			},
+			_textChange:function(ev){
+				if(ev.target.value.length<=10){
+					this.setState({
+						text:ev.target.value,	
+					})
+				}
+			},
+			componentWillReceiveProps:function (newProps){
+				this.setState({
+					text: newProps.initVal,
+				})
+			},
+			
+			render:function(){
+				console.log(this.state.text)
+				var counter = null;
+				if(this.state.text.length>0){
+					counter = React.DOM.h3(null,
+						React.createElement(Counter,{
+							count:this.state.text.length,
+						})
+					);
+				}
+				
+				return React.DOM.div(null,
+					React.DOM.textarea({
+						value:this.state.text,
+						onChange:this._textChange,
+					}),
+					counter	
+				)
+			}
+		})
+		
+		
+		
+		
+		var txtObj = ReactDOM.render(
+			React.createElement(txt,{
+				initVal:'guan',
+			}),
+			document.getElementById('app')
+		)
+		
+		
+		document.getElementById('btn').onclick = function(){
+			txtObj.setState({
+				text:'helloworld123'
+			})
+		
+		}
+	</script>
+	</body>
+</html>
