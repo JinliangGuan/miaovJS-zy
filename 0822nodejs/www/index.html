@@ -15,16 +15,22 @@
 </head>
 <body>
 <div id="box"></div>
-
+<input type="text" id="user_name"/>
+<input type="password" id="pass_word"/>
+<button id="btn">注册</button>
 
 <script>
 var box  = document.getElementById('box')
-box.onclick = function(){
-        var ajax = new XMLHttpRequest();
-        ajax.open('get','/user')
-        ajax.send();
-        ajax.onload = function(){
-                console.log(ajax.responseText)
+var pwInp= document.getElementById('pass_word')
+var userInp  = document.getElementById('user_name')
+var btn  = document.getElementById('btn')
+btn.onclick = function(){
+        var xhr= new XMLHttpRequest();
+        xhr.open('get','/user?act=add&username='+userInp.value+'&password='+pwInp.value)
+        xhr.send();
+        xhr.onload = function(){
+        	let data = JSON.parse(xhr.responseText);
+                console.log(data)
         }
 }
 

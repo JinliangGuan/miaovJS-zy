@@ -8,32 +8,25 @@ const arr = [
 
 
 const server = http.createServer((req, res) => {
-		
-		let moUrl = req.url=='/'?'/index.html':req.url;
-		
-		let url = 'www'+req.url;
-		
-		if(/(\.html$)|(\.js$)/.test(req.url)){
+	if(!/favicon.ico/.test(req.url)){
+		let theUrl = req.url=='/'?'/index.html':req.url;
+		let url = 'www'+theUrl;
+		if(/user/.test(req.url)){
 			let arrData = req.url.split('?')[1];
 			let arrDate2 = arrDate2.split('&');
-			let reUserName = '';
-			let rePassWord = '';
-			let code = null;
-			
-			arrDate2.forEach((e,i)=>{
-				if(e.split('=')[0]=='username'){
-					reUserName = decodeURI(e.split('=')[1]);	
-				}
-				if(e.split('=')[0]=='password'){
-					rePassWord = e.split('=')[1];	
-				}
+			let reqObj = {}
+			let resObj = {code:1};
+		
+			arrData2.forEach(e=>{
+				let reqItem = e.split('=');
+				reqObj[reqItem[0]] = reqItem[1]
 			})
 			
 			arrDate2.forEach((e,i)=>{
 				if(e.split('=')[0]=='act'){
 					if(e.split('=')[1] == 'add'){	
 						if(arr.find(e=>e.username==reUserName)){
-							res.write('该名字已经被注册');
+							res.write('该用户已经存在');
 							res.end();
 						}else{
 							
@@ -45,19 +38,31 @@ const server = http.createServer((req, res) => {
 				}
 			})
 			
+			if(reqObj.act == 'add'){
+				if(arr.find(e=>e.username == reqObj.username)){
+					resObj.msg = "该用户已经注册"
+				}else{
+					arr.push({username:reqObj.username,password:reqObj.password});
+					resObj.msg = "欢迎你，新用户";
+					resObj.code = 0;
+				}
+			}else if(reqObj.act == 'login'){
+				
+			}
 			
 			
-			res.write("'name':'mahui'");
+			res.writeHead(200, {'Content-Type':'text/html;charset=utf-8'});
+			res.write(JSON.stringify(resObj));
 			res.end();
+			
 			
 		}else{
 			fs.readFile(url, (error, data) => {
-				
                 res.write(data);
                 res.end();
         	})
 		}
- 
+ 	}
 })
 
 server.listen(88)
