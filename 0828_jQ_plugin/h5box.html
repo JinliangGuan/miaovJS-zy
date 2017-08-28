@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>H5拖动——菜鸟教程</title>
+</head>
+<style type="text/css">
+    #div1 {width:350px;height:70px;padding:10px;border:1px solid #aaaaaa;}
+</style>
+<body>
+       <p>拖动 RUNOOB.COM 图片到矩形框中:</p>
+       <div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+       <br>
+       <img id="drag1" src="img_w3slogo.gif" draggable="true" ondragstart="drag(event)" width="336" height="69">
+
+
+       <script>
+           var div1 = document.getElementById('div1');
+           var drag1 = document.getElementById('drag1');
+           function drag(ev){
+               ev.dataTransfer.setData("Text",ev.target.id)
+           }
+
+           
+       
+       </script>
+</body>
+</html>

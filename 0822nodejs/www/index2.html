@@ -7,7 +7,7 @@
         <title>Document</title>
         <style>
             #box{
-                    background: #ccc;
+                    background: skyblue;
                     width: 200px;
                     height: 200px;
             }
@@ -28,8 +28,9 @@ var btn  = document.getElementById('btn')
 var lBtn  = document.getElementById('login_btn')
 btn.onclick = function(){
         var xhr= new XMLHttpRequest();
-        xhr.open('get','/user?act=add&username='+userInp.value+'&password='+pwInp.value)
-        xhr.send();
+        xhr.open('post','/user');
+        xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+        xhr.send('act=add&username='+userInp.value+'&password='+pwInp.value);
         xhr.onload = function(){
         	let data = JSON.parse(xhr.responseText);
                 console.log(data)
@@ -37,8 +38,9 @@ btn.onclick = function(){
 }
 lBtn.onclick = function(){
 		var xhr= new XMLHttpRequest();
-        xhr.open('get','/user?act=login&username='+userInp.value+'&password='+pwInp.value)
-        xhr.send();
+        xhr.open('post','/user');
+        xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+        xhr.send('act=login&username='+userInp.value+'&password='+pwInp.value);
         xhr.onload = function(){
         	let data = JSON.parse(xhr.responseText);
                 console.log(data)
