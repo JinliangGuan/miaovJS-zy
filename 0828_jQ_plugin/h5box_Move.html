@@ -7,8 +7,8 @@
     <title>H5拖动——菜鸟教程</title>
 </head>
 <style type="text/css">
-    #div1 {width:350px;height:70px;padding:10px;border:1px solid #aaaaaa;}
-    #box{width:350px;height:70px;padding:10px;border:1px solid #aaaaaa;}
+    #div1,#box {width:350px;height:70px;padding:10px;border:1px solid #aaaaaa;}
+    
 </style>
 <body>
        <p>拖动 RUNOOB.COM 图片到矩形框中:</p>
@@ -21,30 +21,29 @@
 
        <script>
            var div1 = document.getElementById('div1');
+           var box = document.getElementById('box');
            var img = document.getElementById('drag1');
 
            img.ondragstart = function(ev){
-               console.log('拖拽开始')
+               console.log('拖拽开始');
+               ev.dataTransfer.setData('Text',ev.target.id);
            } 
-           div1.ondragenter = function(ev){
-               console.log('移入')
-           }
-           div1.ondragleave = function(ev){
-               console.log('移出')
-           }
-           div1.ondragover = function(ev){
-               console.log('移动')
-               
-           }
-           document.ondragover = function(ev){
-            //    return false;
-               ev.preventDefault()
-                           
-           }
 
-           div1.ondrop = function(ev){
-               console.log('在目标元素上放开')
-               
+
+        //    document.ondragover = function(ev){
+        //     //    return false;
+        //        ev.preventDefault();
+        //        console.log('在这里阻止也行')
+                           
+        //    }
+        
+            box.ondragover = div1.ondragover = function(ev){
+                ev.preventDefault();
+            }
+           box.ondrop = div1.ondrop = function(ev){
+               console.log('在目标元素上放开');
+               var data = ev.dataTransfer.getData('Text')
+               ev.target.appendChild(document.getElementById(data))
            }
 
            img.ondragend = function(){
@@ -52,10 +51,6 @@
            }
 
 
-
-           function drag(ev){
-               ev.dataTransfer.setData("Text",ev.target.id)
-           }
 
            
        
