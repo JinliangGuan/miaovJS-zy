@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>腾讯·优居</title>
+		<link rel="stylesheet" type="text/css" href="css/common.css">
+		<link rel="stylesheet" href="css/index.css">
+		<style>
+			#box{
+				width:4rem;
+				height: 4rem;
+				background:red;
+				position: absolute;
+				left:0;
+				top:2rem;
+				opacity: 0.4;
+				z-index:10;
+			}
+			
+			#div1{
+				width:4rem;
+				height:0.3rem;
+				line-height:0.3rem;
+				position: absolute;
+				top:4rem;
+				z-index:5;
+				color:#000;
+
+				
+			}
+			#txt{
+				width:4rem;
+				height:0.3rem;
+				line-height:0.3rem;
+				position: absolute;
+				top:8rem;
+				z-index:5;
+				color:#000;
+			}
+		</style>
+	</head>
+	<!--<script>
+		console.log(window.devicePixelRatio);
+		var iScale= 1 /window.devicePixelRatio;
+		document.write('<meta name="viewport" content="width=device-width,initial-scale='+iScale+',minimum-scale='+iScale+',maximum-scale='+iScale+',user-scalable=no"/>');
+		var iWidth=document.documentElement.clientWidth;
+		document.getElementsByTagName('html')[0].style.fontSize=iWidth/7.5+'px';
+	</script>-->
+	<script src="js/Adaptive.js"></script>
+	<body>
+		<header>
+			<div class="topbar clearfix">
+				<h1 class="logo fl" id="youjulogo">腾讯优居</h1>
+				<div class="city fl"><span>北京</span><i class="cityIcn"></i></div>
+				<div class="top_service fr"></div>
+			</div>
+		</header>
+		<div class="banner">
+			<ul>
+				<li><img src="" alt=""></li>
+			</ul>
+		</div>
+		<ul class="hotIcn clearfix">
+			<li class="fl"></li>
+			<li class="fl"></li>
+			<li class="fl"></li>
+			<li class="fl"></li>
+		</ul>
+		<div id="box"></div>
+		<div id="div1" data-href="https://www.baidu.com/?tn=57095150_2_oem_dg">百度</div>
+		<p id="txt" data-href="https://www.baidu.com/?tn=57095150_2_oem_dg">谷歌</p>
+		<!-- <a href="https://www.baidu.com/?tn=57095150_2_oem_dg" id="link">百度</a> -->
+	<script>
+		var box = document.getElementById('box') ;
+		var div1 = document.getElementById('div1') ;
+		
+		box.addEventListener('touchstart',function(){
+			box.style.background = 'blue';
+			box.style.display = 'none';
+			
+		})
+		box.addEventListener('touchmove',function(){
+			box.style.background = 'green';
+		})
+		box.addEventListener('touchend',function(){
+			box.style.background = '#000';
+			
+		})
+		// div1.addEventListener('touchstart',function(ev){
+		// 	//alert(ev.target.getAttribute('data-href'))
+		// 	window.location.href=ev.target.getAttribute('data-href');
+		// })
+		
+		document.addEventListener('touchstart',function(ev){
+			console.log(ev.target,ev.target.getAttribute('data-href'))
+			if(ev.target.getAttribute('data-href')){
+				window.location.href=ev.target.getAttribute('data-href');
+			}
+		})
+
+		
+
+
+
+
+	</script>
+
+	</body>
+</html>

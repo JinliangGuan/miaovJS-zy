@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=2.0, user-scalable=no, width=device-width" name="viewport">
+		<title>腾讯·优居</title>
+		<link rel="stylesheet" type="text/css" href="css/common.css">
+		<link rel="stylesheet" href="css/index.css">
+		
+		<style>
+			#box{
+				width:6rem;
+				height: 6rem;
+				background:red;
+				position: absolute;
+				left:0;
+				top:2rem;
+				opacity: 0.4;
+				z-index:10;
+			}
+			
+			#link{
+				width:4rem;
+				height:0.3rem;
+				line-height:0.3rem;
+				position: absolute;
+				top:4rem;
+				z-index:5;
+				color:#000;
+
+				
+			}
+			#div1{
+				width: 1rem;
+				height: 1rem;
+				background: yellow;
+				position: absolute;
+				left:0;
+				top:8rem;
+			}
+			#inp{
+				width: 6rem;
+				height: 0.5rem;
+				line-height: 0.5rem;
+				border:0.03rem solid #000; 
+				border-radius: 0;
+			}
+			
+		</style>
+	</head>
+	<!-- <script>
+		console.log(window.devicePixelRatio);
+		var iScale= 1 /window.devicePixelRatio;
+		document.write('<meta name="viewport" content="width=device-width,initial-scale='+iScale+',minimum-scale='+iScale+',maximum-scale='+iScale+',user-scalable=no"/>');
+		var iWidth=document.documentElement.clientWidth;
+		document.getElementsByTagName('html')[0].style.fontSize=iWidth/7.5+'px';
+	</script> -->
+	<script src="js/Adaptive.js"></script>
+	<body>
+		<header>
+			<div class="topbar clearfix">
+				<h1 class="logo fl" id="youjulogo">腾讯优居</h1>
+				<div class="city fl"><span>北京</span><i class="cityIcn"></i></div>
+				<div class="top_service fr"></div>
+			</div>
+		</header>
+		<div class="banner">
+			<ul>
+				<li><img src="" alt=""></li>
+			</ul>
+		</div>
+		<ul class="hotIcn clearfix">
+			<li class="fl"></li>
+			<li class="fl"></li>
+			<li class="fl"></li>
+			<li class="fl"></li>
+		</ul>
+		<!-- 一下为测试移动端内容 -->
+		<div id="box"></div>
+		<div id="div1"></div>
+		<a href="https://www.baidu.com/?tn=57095150_2_oem_dg" id="link">百度</a>
+		<input type="text" name="" value="" id="inp">
+
+	<script>
+		var box = document.getElementById('box') ;
+		var div1 = document.getElementById('div1') ;
+		var link = document.getElementById('link') ;
+		var inp = document.getElementById('inp') ;
+		
+		box.addEventListener('touchmove',function(ev){
+			box.style.background = 'blue';
+			//box.style.display = 'none';
+			var num = ev.targetTouches.length;
+			// var num = ev.changedTouches.length;
+			console.log(num)
+			div1.innerHTML = num;
+		})
+
+		document.addEventListener('touchstart',function(ev){
+			ev.preventDefault();
+		});
+		inp.addEventListener('touchstart',function(ev){
+			ev.cancelBubble = true;
+		})
+		link.addEventListener('touchstart',function(ev){
+			ev.cancelBubble = true;
+		})
+
+		//误操作=============
+		// let dnX = 0;
+		// let dnY = 0;
+		
+		// div1.addEventListener('touchstart',function(ev){
+		// 	dnX = ev.changedTouches[0].clientX;
+		// 	dnY = ev.changedTouches[0].clientY;
+		// })
+		// div1.addEventListener('touchend',function(ev){
+		// 	upX = ev.changedTouches[0].clientX;
+		// 	upY = ev.changedTouches[0].clientY;
+		// 	disX = Math.abs(upX-dnX);
+		// 	disY = Math.abs(upY-dnY);
+		// 	console.log(disX,disY)
+		// 	if(disX<50 && disY<50){
+		// 		div1.style.background = 'red';
+		// 	}else{
+		// 		alert('反悔了')
+		// 	}
+		// })
+
+
+		addTouchFn(div1,red)
+		function red(obj){
+			obj.style.background = 'blue';	
+		}
+		//封一个误操作的函数
+		function addTouchFn(obj,doFn){
+			let dnX = 0;
+			let dnY = 0;
+			
+			obj.addEventListener('touchstart',function(ev){
+				dnX = ev.changedTouches[0].clientX;
+				dnY = ev.changedTouches[0].clientY;
+			})
+			obj.addEventListener('touchend',function(ev){
+				upX = ev.changedTouches[0].clientX;
+				upY = ev.changedTouches[0].clientY;
+				disX = Math.abs(upX-dnX);
+				disY = Math.abs(upY-dnY);
+				console.log(disX,disY)
+				if(disX<50 && disY<50){
+					doFn(obj)
+				}else{
+					alert('反悔了')
+				}
+			})
+		}
+
+
+
+
+	</script>
+
+	</body>
+</html>
