@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    var data = [3,5,2,3,81,9,6,6,8,81];
+	// for(var i=0;i<data.length;i++){
+	// 	for(var j=i+1;j<data.length;j++){
+	// 		if(data[i]==data[j]){
+	// 			data.splice(j,1);
+	// 			j--;
+	// 		}
+	// 	}
+	// }
+
+
+		// 第二种
+	// var json = {};
+	// var data2	 = [];
+	// for(var i=0;i<data.length;i++){
+	// 	if(!json[data[i]]){
+	// 		json[data[i]] = 2;
+	// 		data2.push(data[i]);
+	// 	}
+	// }
+		// 第三种
+
+		// var data3 = [];
+		// for(var i=0;i<data.length;i++){
+		// 	if(data.indexOf(data[i])==i){
+		// 		data3.push(data[i])
+		// 	}
+		// }
+
+
+	//console.log('data3:',data3)
+
+		//方法四
+		var data4 = [...new Set(data)];
+		console.log(data4)
+		
+
+
+
+		
+
+
+    </script>
+   
+
+
+
+</body>
+</html>
