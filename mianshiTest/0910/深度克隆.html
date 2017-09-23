@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+
+
+        var arr = [1,5,6,95,[4,5],8,{name:'leo'},function fn(){}];
+        //纯数据的克隆
+        // var arr2 = JSON.parse(JSON.stringify(arr))
+        // arr[6].age = 18;
+        // console.log(arr,arr2)
+
+        console.log(Object.prototype.toString.call(arr))
+        //递归通用克隆
+
+       function deepclone(obj){
+           var objType = Object.prototype.toString;
+           var newObj = obj.push?[]:{};
+           for(var k in obj){
+               if(objType.call(obj[k]) === '[object Object]' || objType.call(obj[k]) === '[object Array]'){
+                   newObj[k] = deepclone(obj[k]);
+               }else{
+                   newObj[k] = obj[k]
+               }
+           }
+           return newObj;
+       }
+
+        // function deepclone(obj){
+        //     var toSting = Object.prototype.toString;
+        //     var o = obj.push?[]:{};
+        //     for(var attr in obj){
+        //         if(toSting.call(obj[attr]) === '[object Object]' || toSting.call(obj[attr]) === '[object Array]'){
+        //             o[attr] = deepclone(obj[attr]);
+        //         }else{
+        //             o[attr] = obj[attr];
+        //         }
+        //     }
+        //     return o;
+	    // }
+        var arr2 = deepclone(arr);
+        arr2[4].push('x');
+        console.log(arr2,arr)
+
+        
+
+		
+
+
+    </script>
+   
+
+
+
+</body>
+</html>

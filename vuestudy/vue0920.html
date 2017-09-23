@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .active{
+            background:#eee;
+            font-size:50px;
+        }
+        .color{
+            color:red;
+        }
+        .big{
+            font-size: 100px;
+        }
+        .test-one{
+            text-align:center;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" v-bind:class="[isActive ? activeClass:'',colorClass,{'test-one':test}]">好的</div>
+
+<script src="vue.js"></script>
+<script>
+   var vm = new Vue({
+       el:'#app',
+       data:{
+           isActive:true, 
+           activeClass:'active',
+           colorClass:'color',
+           test:true
+       },
+       computed:{
+            classObj:function(){
+                return{
+                    active:this.isActive && this.error,
+                }
+           } 
+          
+       }
+   })
+
+
+</script>
+
+</body>
+</html>

@@ -41,8 +41,19 @@
 	//console.log('data3:',data3)
 
 		//方法四
-		var data4 = [...new Set(data)];
-		console.log(data4)
+//		var data4 = [...new Set(data)];
+//		console.log(data4)
+		
+		//方法五
+		var data5 = [];
+		data.sort((a,b)=>a-b);
+		for(var i=0;i<data.length;i++){
+			if(data[i]!=data[i-1]){
+				data5.push(data[i])
+			}
+		}
+		
+		console.log(data5)
 		
 
 

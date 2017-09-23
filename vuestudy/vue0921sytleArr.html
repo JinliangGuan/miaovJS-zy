@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .active{
+            background:#eee;
+            font-size:50px;
+            
+        }
+        .color{
+            color:red;
+        }
+        .big{
+            font-size: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" v-bind:style="{display:['-webkit-box','-ms-flexbox','flex']}">
+        <my-component 
+            v-for="e in todos" 
+            v-bind:msg="e" 
+            v-bind:key="e"
+            v-bind:style = "[styleObj,otherStyle]">
+        </my-component>
+    </div>
+
+<script src="vue.js"></script>
+<script>
+   
+   Vue.component('my-component',{
+       props:['msg'],
+       template:'<p class="active">{{msg}}</p>',
+       
+   })
+   var vm = new Vue({
+       el:'#app',
+       data:{
+           bigClass:'big',
+           isColor:false,
+           heightSize:50,
+           todos:[1,2,3,4,5],
+           styleObj:{
+               height:50+'px',
+               lineHeight:'50px',
+               color:'red',
+               background:'skyblue',
+               margin:'0 20px'
+           },
+           otherStyle:{
+               width:100+'px',
+               textAlign:'center'
+           }
+       },
+       computed:{
+           jiao:function(){
+               var size = 0;
+               if(this.isColor){
+                    size = 10+'px'
+               }else{
+                    size = 50+'px'
+               }
+               return size;
+               
+           }
+       },
+       methods:{
+           getWinH:function(){
+               return window.innerHeight+'px';
+           }
+       }
+       
+       
+   })
+
+
+</script>
+
+</body>
+</html>
