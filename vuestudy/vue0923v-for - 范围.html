@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .paohui{
+            background:red;
+        }
+    </style>
+</head>
+<body>
+   <ul id="app" v-if="list.length > 3">
+         <li v-for="item in list">{{ item.msg }}</li>
+   </ul>
+   
+
+<script src="vue.js"></script>
+<script>
+   var vm =  new Vue({
+        el:'#app',
+        data:{
+            list:[
+                {msg:'空山不见人',show:false},
+                {msg:'但闻人语响',show:true},
+                {msg:'返景入深林',show:true},
+                {msg:'复照青苔上',show:false},
+            ]
+        }
+   })
+
+   
+
+
+</script>
+
+</body>
+</html>
