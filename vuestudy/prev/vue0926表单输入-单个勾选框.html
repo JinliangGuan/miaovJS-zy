@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue表单输入-复选框</title>
+    <style>
+     
+    </style>
+</head>
+<body>
+    <div id="app">
+         <input type="checkbox" id="Like" v-model="islike">
+        <label for="Like">{{islike}}</label>
+        <!-- <label for="Like">{{islike?'喜欢':'不喜欢'}}</label> -->
+         <br/>
+
+        <input type="checkbox" id="jack" value="Jack" v-model="checkedName">
+        <label for="jack">Jack</label>
+        <input type="checkbox" id="john" value="John" v-model="checkedName">
+        <label for="john">John</label>
+        <input type="checkbox" id="mike" value="Mike" v-model="checkedName">
+        <label for="mike">Mike</label>
+        <br/>
+        <span>Checked names:{{ checkedName }}</span>
+    </div>
+    
+    
+    
+    
+
+   
+<script src="vue.js"></script>
+<script>
+   var app = new Vue({
+       el:'#app',
+       data:{
+           islike:true,
+           checkedName:[],
+       },
+       methods:{
+           say:function(str,ev){
+                alert(str)
+                console.log(str,'来自',ev.target.tagName)
+           },
+           doThis:function(){
+               console.log('this')
+           },
+           doThat:function(){
+               console.log('that')
+           }
+       }
+   })
+
+
+
+</script>
+
+</body>
+</html>

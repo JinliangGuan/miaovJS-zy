@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>v-for todos</title>
+    <style>
+      
+    </style>
+</head>
+<body>
+   <div id="todoApp">
+       <input 
+            v-model="newTodoText"
+            v-on:keyup.enter = "addNewTodo"
+            placeholder="添加一个新todo"
+       >
+       <ul>
+            <li
+                is="todo-item"
+                v-for="(todo,index) in todos"
+                v-bind:key="todo.id"
+                v-bind:title="todo.title"
+                v-on:remove="todos.splice(index,1)"
+            >
+            </li>
+       </ul>
+   </div>
+   
+<script src="vue.js"></script>
+<script>
+    Vue.component('todo-item',{
+        template:'\
+        <li>\
+            {{title}}\
+            <button v-on:click="$emit(\'remove\')">X</button>\
+            </li>\
+        ',
+        props:['title']
+    })
+    new Vue({
+        el:'#todoApp',
+        data:{
+            newTodoText:'',
+            todos:[
+                {
+                    id:1,
+                    title:'吃饭',
+                },
+                {
+                    id:2,
+                    title:'学习',
+                },
+                {
+                    id:3,
+                    title:'看电影',
+                },
+                {
+                    id:4,
+                    title:'听音乐',
+                }
+            ],
+            nextTodoId:5
+        },
+        methods:{
+            addNewTodo:function(){
+                this.todos.push({
+                    id:this.nextTodoId++,
+                    title:this.newTodoText
+                })
+                this.newTodoText = ''
+            }
+        }
+    })
+
+</script>
+
+</body>
+</html>

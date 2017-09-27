@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue事件-键值</title>
+    <style>
+      #box{
+          width:300px;
+          height: 300px;
+          background:#ccc;
+      }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-on:keyup.alt.v="doThis">
+        <a href="#" v-on:click.ctrl="doThat">TEST</a>
+    </div>
+    
+    
+    
+    
+
+   
+<script src="vue.js"></script>
+<script>
+    Vue.config.keyCodes.v = 86;
+    // Vue.config.keyCodes = {
+    //     v: 86,
+    //     f1: 112,
+    //     // camelCase 不可用
+    //     mediaPlayPause: 179,
+    //     // 取而代之的是 kebab-case 且用双引号括起来
+    //     "media-play-pause": 179,
+    //     up: [38, 87]
+    // }
+   var app = new Vue({
+       el:'#app',
+       data:{
+           name:'guan'
+       },
+       methods:{
+           say:function(str,ev){
+                alert(str)
+                console.log(str,'来自',ev.target.tagName)
+           },
+           doThis:function(){
+               console.log('this')
+           },
+           doThat:function(){
+               console.log('that')
+           }
+       }
+   })
+
+
+
+</script>
+
+</body>
+</html>

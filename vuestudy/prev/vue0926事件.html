@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue事件</title>
+    <style>
+      #box{
+          width:300px;
+          height: 300px;
+          background:#ccc;
+      }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <button v-on:click="say('what',$event)">say what</button>
+        <br/>
+        <div v-on:click.prevent.self="doThat" id="box"><a href="#gogo" v-on:click="doThis">.stop</a></div>
+        <form action="" v-on:submit.prevent="onSubmit">prevent</form>
+        <form action="" v-on:submit.prevent>prevent-only</form>
+        <a href="#" v-on:click.stop.prevent="doThat">.stop.prevent</a>
+        <div v-on:click.capture="doThis">.capture</div>
+        <div v-on:click.selt="doThat">.self</div>
+        <p>123</p>
+        <p>123</p>
+        <p>123</p>
+        <p>123</p>
+        <p>123</p>
+        <p>123</p>
+        <p>123</p>
+        <p>123</p>
+        <p>123</p>
+        <p>123</p>
+        <p>123</p>
+        <p>123</p>
+        <p>123</p>
+        <p>123</p>
+        <p>123</p>
+        <p>123</p>
+        <p>123</p>
+        <p>123</p>
+        <p>123</p>
+        <p>123</p>
+        <p>123</p>
+        <p>123</p>
+        <p>123</p>
+        <p>123</p>
+        <p>123</p>
+        <p>123</p>
+        <p>123</p>
+        <p>123</p>
+        <p id="gogo">123</p>
+    </div>
+    
+
+    
+
+   
+<script src="vue.js"></script>
+<script>
+   var app = new Vue({
+       el:'#app',
+       data:{
+           name:'guan'
+       },
+       methods:{
+           say:function(str,ev){
+                alert(str)
+                console.log(str,'来自',ev.target.tagName)
+           },
+           doThis:function(){
+               console.log('this')
+           },
+           doThat:function(){
+               console.log('that')
+           }
+       }
+   })
+
+
+
+</script>
+
+</body>
+</html>

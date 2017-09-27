@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue表单输入-选择列表</title>
+    <style>
+     
+    </style>
+</head>
+<body>
+    <div id="app">
+       <select name="" id="" v-model="selected">
+           <option v-bind:value="opt.value" v-bind:disabled="opt.dis" v-for="opt in optlist">{{opt.txt}}</option>
+       </select>
+       <span>Selecked:{{ selected }}</span>
+    </div>
+    
+    
+    
+    
+
+   
+<script src="vue.js"></script>
+<script>
+   var app = new Vue({
+       el:'#app',
+       data:{
+           selected:'',
+           optlist:[
+               {txt:'请选择',value:'',dis:true},
+               {txt:'One',value:'A',dis:false},
+               {txt:'Two',value:'B',dis:false},
+               {txt:'Three',value:'C',dis:false}
+               ]
+       },
+       methods:{
+          
+       }
+   })
+
+
+
+</script>
+
+</body>
+</html>
